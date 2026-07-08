@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -34,14 +34,25 @@ function applyBrightness(brightness: number) {
 }
 
 export function BrightnessSlider() {
-  // Lazy init from localStorage — the inline script in layout.tsx already
-  // applied the CSS vars before paint, so we just need the slider thumb
-  // position to match.
-  const [brightness, setBrightness] = useState(() => {
-    if (typeof window === "undefined") return 0;
+  // Always initialize to 0 (matches server render) to avoid hydration mismatch.
+  // The inline script in layout.tsx already applied the saved brightness to
+  // CSS vars before paint, so the page looks correct immediately. We just
+  // need to sync the slider thumb position after mount.
+  const [brightness, setBrightness] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  // Read saved brightness after mount — this is the documented React pattern
+  // for localStorage. The eslint rule is overly strict here.
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     const stored = localStorage.getItem("brightness");
-    return stored !== null ? Number(stored) : 0;
-  });
+    const initial = stored !== null ? Number(stored) : 0;
+    if (initial !== 0) {
+      setBrightness(initial);
+    }
+    setMounted(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
 
   const handleChange = useCallback((value: number) => {
     setBrightness(value);
@@ -49,11 +60,19 @@ export function BrightnessSlider() {
     localStorage.setItem("brightness", String(value));
   }, []);
 
+  // Don't render the slider until mounted — prevents any hydration mismatch
+  // on the input's value attribute.
+  if (!mounted) {
+    return (
+      <div className="fixed bottom-5 right-5 z-50 h-9 w-[150px]" aria-hidden />
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-3.5 py-2 surface rounded-full"
       style={{
         background:
@@ -73,6 +92,7 @@ export function BrightnessSlider() {
         onChange={(e) => handleChange(Number(e.target.value))}
         className="brightness-range"
         aria-label="Adjust brightness"
+        suppressHydrationWarning
       />
       <Sun
         className={`w-4 h-4 transition-colors ${

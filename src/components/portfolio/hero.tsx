@@ -124,18 +124,28 @@ export function Hero() {
   );
 }
 
-/* Square profile photo frame with 1px white border.
-   Replace the monogram with a real photo by dropping an image into /public/
-   and swapping the JSX below for <img src="/allan.jpg" ... />. */
+/* Profile photo in a square frame with 1px white border.
+   Uses object-cover so the portrait photo crops nicely to fill the square.
+   The blue duotone overlay (multiply blend) ties the warm-toned photo
+   into the site's blue palette — without making it look artificially tinted. */
 function ProfilePhoto() {
   return (
     <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden">
-      {/* Monogram placeholder — replace with <img /> when a real photo is available */}
-      <div className="absolute inset-0 grid place-items-center">
-        <span className="font-display text-7xl font-bold text-foreground/90 select-none">
-          AS
-        </span>
-      </div>
+      <img
+        src="/allan.jpg"
+        alt="Allan Sebastian"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Subtle blue duotone overlay — multiply blend pushes the photo's
+          warm tones toward the site palette without desaturating it.
+          Pointer-events-none so it never blocks interaction. */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-multiply"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.36 0.2 264 / 0.25), oklch(0.36 0.2 264 / 0.1))",
+        }}
+      />
     </div>
   );
 }

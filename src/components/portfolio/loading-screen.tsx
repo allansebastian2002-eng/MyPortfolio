@@ -30,16 +30,25 @@ export function LoadingScreen() {
       className="fixed inset-0 z-[100] grid place-items-center bg-background"
     >
       <div className="flex flex-col items-center gap-7">
-        {/* Monogram in square frame — matches the hero photo frame */}
+        {/* Photo in square frame — matches the hero */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="w-20 h-20 border border-border grid place-items-center"
+          className="w-20 h-20 border border-border overflow-hidden relative"
         >
-          <span className="font-display text-3xl font-bold text-foreground">
-            AS
-          </span>
+          <img
+            src="/allan.jpg"
+            alt="Allan Sebastian"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div
+            className="absolute inset-0 pointer-events-none mix-blend-multiply"
+            style={{
+              background:
+                "linear-gradient(135deg, oklch(0.36 0.2 264 / 0.25), oklch(0.36 0.2 264 / 0.1))",
+            }}
+          />
         </motion.div>
 
         {/* Name in mono — small, tracked */}
