@@ -44,31 +44,31 @@ export function Skills() {
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-28">
               <span className="eyebrow">Skills</span>
-              <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
                 What I work with.
               </h2>
-              <p className="mt-5 text-base text-muted-foreground leading-relaxed max-w-xs">
+              <p className="mt-5 text-base text-foreground/70 leading-relaxed max-w-xs font-light">
                 From low-level systems programming to smart contracts and
                 full-stack frameworks — the tools I reach for when I build.
               </p>
             </div>
           </div>
 
-          {/* RIGHT — editorial definition list (8/12) */}
+          {/* RIGHT — editorial definition list (8/12) with white-line dividers */}
           <div className="lg:col-span-8">
-            <dl className="divide-y divide-border">
+            <dl className="divide-y divide-border border-y border-border">
               {SKILL_GROUPS.map((group) => (
                 <div
                   key={group.title}
                   className="py-5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 group"
                 >
-                  <dt className="sm:col-span-4 text-sm font-medium text-foreground">
+                  <dt className="sm:col-span-4 text-sm font-semibold text-foreground">
                     {group.title}
                   </dt>
-                  <dd className="sm:col-span-8 text-sm text-muted-foreground leading-relaxed">
+                  <dd className="sm:col-span-8 text-sm text-foreground/70 leading-relaxed font-light">
                     {group.items.map((item, i) => (
                       <span key={item}>
-                        <span className="transition-colors duration-200 group-hover:text-foreground/80">
+                        <span className="transition-colors duration-200 group-hover:text-foreground/90">
                           {item}
                         </span>
                         {i < group.items.length - 1 && (

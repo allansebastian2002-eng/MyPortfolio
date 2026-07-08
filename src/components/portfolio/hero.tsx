@@ -9,7 +9,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function Hero() {
   const reduceMotion = useReducedMotion();
 
-  // When reduced motion is preferred, render everything visible with no transform
   const fade = (delay: number) =>
     reduceMotion
       ? { initial: false, animate: { opacity: 1, y: 0 } }
@@ -32,26 +31,26 @@ export function Hero() {
               <span className="eyebrow">Portfolio — 2024</span>
             </motion.div>
 
-            {/* Name — Fraunces serif, two lines, terracotta period as the single accent mark */}
+            {/* Name — Space Grotesk display, huge, two lines, yellow period */}
             <motion.h1
               {...fade(0.08)}
-              className="mt-6 font-serif font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight"
+              className="mt-6 font-display font-bold text-6xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.92] tracking-[-0.03em]"
             >
               Allan
               <br />
-              Sebastian<span className="text-primary">.</span>
+              Sebastian<span className="text-accent">.</span>
             </motion.h1>
 
             {/* Role + location */}
             <motion.p
               {...fade(0.18)}
-              className="mt-7 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl"
+              className="mt-8 text-lg sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light"
             >
               Blockchain &amp; web developer building decentralised systems,
               smart contracts, and full-stack applications from Kerala, India.
             </motion.p>
 
-            {/* CTAs — primary solid terracotta, secondary ghost outline */}
+            {/* CTAs — primary solid white (inverts to blue on hover), secondary white-outline */}
             <motion.div
               {...fade(0.28)}
               className="mt-9 flex flex-wrap items-center gap-3"
@@ -62,11 +61,10 @@ export function Hero() {
                     .getElementById("projects")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(184,132,90,0.5)]"
-                style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+                className="inverse-hover group inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-semibold rounded-md border border-foreground"
               >
-                See the work
-                <ArrowDownRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+                <span className="invert-text">See the work</span>
+                <ArrowDownRight className="w-4 h-4 invert-text transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
               </button>
               <button
                 onClick={() =>
@@ -74,17 +72,17 @@ export function Hero() {
                     .getElementById("contact")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium rounded-md text-foreground transition-colors duration-200 hover:border-foreground/40 hover:bg-foreground/[0.03]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-semibold rounded-md text-foreground transition-colors duration-200 hover:border-foreground"
               >
                 <Mail className="w-4 h-4" />
                 Get in touch
               </button>
             </motion.div>
 
-            {/* Socials — restrained, small, neutral */}
+            {/* Socials — restrained, small, with white-line separators */}
             <motion.div
               {...fade(0.36)}
-              className="mt-10 flex items-center gap-5 text-sm text-muted-foreground"
+              className="mt-10 flex items-center gap-5 text-sm text-foreground/70"
             >
               <a
                 href="mailto:allansebastian2002@gmail.com"
@@ -126,29 +124,18 @@ export function Hero() {
   );
 }
 
-/* Soft-rounded-square profile photo with thin neutral border + soft flat shadow.
-   No glow ring, no blur. Replace the monogram with a real photo by dropping an
-   image into /public/ and swapping the JSX below for <img src="/allan.jpg" ... />. */
+/* Square profile photo frame with 1px white border.
+   Replace the monogram with a real photo by dropping an image into /public/
+   and swapping the JSX below for <img src="/allan.jpg" ... />. */
 function ProfilePhoto() {
   return (
-    <div
-      className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-xl bg-card border border-border overflow-hidden shadow-[0_12px_40px_-12px_rgba(0,0,0,0.5)]"
-      style={{ borderRadius: "14px" }}
-    >
+    <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden">
       {/* Monogram placeholder — replace with <img /> when a real photo is available */}
       <div className="absolute inset-0 grid place-items-center">
-        <span className="font-serif text-7xl text-primary/80 select-none">
+        <span className="font-display text-7xl font-bold text-foreground/90 select-none">
           AS
         </span>
       </div>
-      {/* Subtle warm tint to make the placeholder feel intentional */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(120% 80% at 30% 20%, oklch(0.62 0.09 55 / 0.08), transparent 60%)",
-        }}
-      />
     </div>
   );
 }

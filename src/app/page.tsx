@@ -19,10 +19,11 @@ export default function Home() {
         theme="dark"
         toastOptions={{
           style: {
-            background: "oklch(0.205 0.006 75)",
-            border: "1px solid oklch(1 0 0 / 0.08)",
-            color: "oklch(0.92 0.008 75)",
-            borderRadius: "6px",
+            background: "oklch(1 0 0)",
+            border: "1px solid oklch(1 0 0)",
+            color: "oklch(0.45 0.29 264)",
+            borderRadius: "4px",
+            fontWeight: 500,
           },
         }}
       />

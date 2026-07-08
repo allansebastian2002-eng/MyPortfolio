@@ -52,12 +52,12 @@ export function Navbar() {
     >
       <nav className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Wordmark */}
+          {/* Wordmark — display font, tight */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="font-serif text-lg tracking-tight"
+            className="font-display text-lg font-bold tracking-tight"
           >
-            Allan<span className="text-primary">.</span>
+            Allan<span className="text-accent">.</span>
           </button>
 
           {/* Desktop nav */}
@@ -69,10 +69,10 @@ export function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className={`nav-link text-sm tracking-tight transition-colors ${
+                  className={`nav-link text-sm font-medium tracking-tight transition-colors ${
                     isActive
                       ? "nav-link-active text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      : "text-foreground/70 hover:text-foreground"
                   }`}
                 >
                   {link.label}
@@ -92,7 +92,7 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile drawer — solid, no blur */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -107,7 +107,7 @@ export function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-left py-2.5 text-base text-muted-foreground hover:text-foreground"
+                  className="text-left py-2.5 text-base font-medium text-foreground/80 hover:text-foreground"
                 >
                   {link.label}
                 </button>

@@ -36,12 +36,12 @@ export function Contact() {
           {/* LEFT — heading + CTA (7/12) */}
           <div className="lg:col-span-7">
             <span className="eyebrow">Contact</span>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.05]">
+            <h2 className="mt-3 font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[0.95]">
               Let&apos;s build
               <br />
-              something<span className="text-primary">.</span>
+              something<span className="text-accent">.</span>
             </h2>
-            <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
+            <p className="mt-6 text-base sm:text-lg text-foreground/70 leading-relaxed max-w-md font-light">
               Whether it&apos;s a decentralised product, a security research
               collaboration, or a full-stack web project — I&apos;m always
               happy to talk. Drop me a line and I&apos;ll get back to you.
@@ -50,18 +50,17 @@ export function Contact() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="mailto:allansebastian2002@gmail.com"
-                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(184,132,90,0.5)]"
-                style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+                className="inverse-hover group inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-semibold rounded-md border border-foreground"
               >
-                Send a message
-                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="invert-text">Send a message</span>
+                <ArrowUpRight className="w-4 h-4 invert-text transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
               <button
                 onClick={handleCopyEmail}
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium rounded-md text-foreground transition-colors duration-200 hover:border-foreground/40 hover:bg-foreground/[0.03]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-semibold rounded-md text-foreground transition-colors duration-200 hover:border-foreground"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-primary" />
+                  <Check className="w-4 h-4 text-accent" />
                 ) : (
                   <Copy className="w-4 h-4" />
                 )}
@@ -86,7 +85,7 @@ export function Contact() {
                           : {})}
                         className={
                           contact.href
-                            ? "nav-link hover:text-primary transition-colors"
+                            ? "nav-link hover:text-accent transition-colors"
                             : ""
                         }
                       >
