@@ -47,79 +47,78 @@
 /* Light theme — unused but defined for completeness */
 :root {
   --radius: 0.375rem;
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.55 0.25 260);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.95 0 0);
-  --muted-foreground: oklch(0.45 0 0);
-  --accent: oklch(0.95 0 0);
-  --accent-foreground: oklch(0.2 0 0);
-  --destructive: oklch(0.55 0.22 28);
-  --border: oklch(0.88 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.55 0.25 260);
-  --chart-1: oklch(0.55 0.25 260);
-  --chart-2: oklch(0.6 0.2 200);
-  --chart-3: oklch(0.65 0.2 40);
+  --background: oklch(0.96 0.015 264);
+  --foreground: oklch(0.3 0.22 264);
+  --card: oklch(0.96 0.015 264);
+  --card-foreground: oklch(0.3 0.22 264);
+  --popover: oklch(0.96 0.015 264);
+  --popover-foreground: oklch(0.3 0.22 264);
+  --primary: oklch(0.3 0.22 264);
+  --primary-foreground: oklch(0.96 0.015 264);
+  --secondary: oklch(0.92 0.01 264);
+  --secondary-foreground: oklch(0.3 0.22 264);
+  --muted: oklch(0.92 0.01 264);
+  --muted-foreground: oklch(0.5 0.15 264);
+  --accent: oklch(0.82 0.17 95);
+  --accent-foreground: oklch(0.3 0.22 264);
+  --destructive: oklch(0.6 0.25 25);
+  --border: oklch(0.3 0.22 264 / 0.3);
+  --input: oklch(0.3 0.22 264 / 0.35);
+  --ring: oklch(0.3 0.22 264);
+  --chart-1: oklch(0.3 0.22 264);
+  --chart-2: oklch(0.82 0.17 95);
+  --chart-3: oklch(0.7 0.2 200);
   --chart-4: oklch(0.5 0.2 280);
-  --chart-5: oklch(0.6 0.2 150);
-  --sidebar: oklch(0.97 0 0);
-  --sidebar-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.55 0.25 260);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.95 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.88 0 0);
-  --sidebar-ring: oklch(0.55 0.25 260);
+  --chart-5: oklch(0.65 0.2 150);
+  --sidebar: oklch(0.96 0.015 264);
+  --sidebar-foreground: oklch(0.3 0.22 264);
+  --sidebar-primary: oklch(0.3 0.22 264);
+  --sidebar-primary-foreground: oklch(0.96 0.015 264);
+  --sidebar-accent: oklch(0.92 0.01 264);
+  --sidebar-accent-foreground: oklch(0.3 0.22 264);
+  --sidebar-border: oklch(0.3 0.22 264 / 0.3);
+  --sidebar-ring: oklch(0.3 0.22 264);
 }
 
-/* HIGH-CONTRAST BLUE THEME — the actual palette.
-   Electric blue #0033FF background, pure white text,
-   white-15% borders for structure, signal yellow #FFD60A accent.
-   Maximum contrast, designer-portfolio impact. */
+/* HIGH-CONTRAST BLUE THEME — darker, richer blue (less bright than before).
+   Background oklch(0.36 0.20 264), pure white text,
+   white-32% borders (thicker feel), signal yellow accent.
+   NOTE: These are the dark-mode defaults. The brightness slider
+   (inline script + BrightnessSlider component) overrides these at runtime
+   by interpolating between dark and light endpoints. */
 .dark {
   --radius: 0.375rem;
-  /* Electric blue — saturated, vivid, Klein-adjacent */
-  --background: oklch(0.45 0.29 264);
+  --background: oklch(0.36 0.2 264);
   --foreground: oklch(1 0 0);
-  --card: oklch(0.45 0.29 264);
+  --card: oklch(0.36 0.2 264);
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.45 0.29 264);
+  --popover: oklch(0.36 0.2 264);
   --popover-foreground: oklch(1 0 0);
-  /* Primary = pure white (for buttons that invert on hover) */
   --primary: oklch(1 0 0);
-  --primary-foreground: oklch(0.45 0.29 264);
-  --secondary: oklch(0.5 0.29 264);
+  --primary-foreground: oklch(0.36 0.2 264);
+  --secondary: oklch(0.4 0.2 264);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.5 0.29 264);
-  /* muted-foreground = white at ~80% for secondary text */
-  --muted-foreground: oklch(0.85 0.02 264);
-  --accent: oklch(0.85 0.18 95); /* signal yellow */
-  --accent-foreground: oklch(0.45 0.29 264);
+  --muted: oklch(0.4 0.2 264);
+  --muted-foreground: oklch(0.85 0 0);
+  --accent: oklch(0.82 0.17 95);
+  --accent-foreground: oklch(0.36 0.2 264);
   --destructive: oklch(0.6 0.25 25);
-  /* Borders = white at 18% opacity */
-  --border: oklch(1 0 0 / 0.18);
-  --input: oklch(1 0 0 / 0.22);
+  /* Borders at 32% opacity — thicker/more visible than before (was 18%) */
+  --border: oklch(1 0 0 / 0.32);
+  --input: oklch(1 0 0 / 0.35);
   --ring: oklch(1 0 0);
   --chart-1: oklch(1 0 0);
-  --chart-2: oklch(0.85 0.18 95);
+  --chart-2: oklch(0.82 0.17 95);
   --chart-3: oklch(0.7 0.2 200);
-  --chart-4: oklch(0.6 0.2 280);
+  --chart-4: oklch(0.5 0.2 280);
   --chart-5: oklch(0.65 0.2 150);
-  --sidebar: oklch(0.45 0.29 264);
+  --sidebar: oklch(0.36 0.2 264);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(1 0 0);
-  --sidebar-primary-foreground: oklch(0.45 0.29 264);
-  --sidebar-accent: oklch(0.5 0.29 264);
+  --sidebar-primary-foreground: oklch(0.36 0.2 264);
+  --sidebar-accent: oklch(0.4 0.2 264);
   --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 0.18);
+  --sidebar-border: oklch(1 0 0 / 0.32);
   --sidebar-ring: oklch(1 0 0);
 }
 
@@ -137,8 +136,8 @@
     scroll-behavior: smooth;
   }
   ::selection {
-    background: oklch(0.85 0.18 95);
-    color: oklch(0.45 0.29 264);
+    background: oklch(0.82 0.17 95);
+    color: oklch(0.36 0.2 264);
   }
 }
 
@@ -148,7 +147,7 @@
     font-feature-settings: "ss01";
   }
 
-  /* Nav link — white underline draws in from left on hover.
+  /* Nav link — underline draws in from left on hover.
      Active link gets a yellow underline. */
   .nav-link {
     position: relative;
@@ -160,7 +159,7 @@
     right: 0;
     bottom: -6px;
     height: 1px;
-    background: oklch(1 0 0);
+    background: var(--foreground);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -173,28 +172,29 @@
     background: var(--accent);
   }
 
-  /* Surface — same blue as background but with a 1px white border for structure */
+  /* Surface — transparent with a 1px border for structure */
   .surface {
     background: transparent;
     border: 1px solid var(--border);
   }
 
-  /* Inverse hover — element fills white, text turns blue. Max contrast interaction. */
+  /* Inverse hover — swaps foreground/background so it auto-adapts
+     to whatever the current brightness is (dark or light). */
   .inverse-hover {
     transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
       color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
       border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .inverse-hover:hover {
-    background: oklch(1 0 0);
-    color: oklch(0.45 0.29 264);
-    border-color: oklch(1 0 0);
+    background: var(--foreground);
+    color: var(--background);
+    border-color: var(--foreground);
   }
   .inverse-hover:hover .invert-text {
-    color: oklch(0.45 0.29 264);
+    color: var(--background);
   }
   .inverse-hover:hover .invert-accent {
-    color: oklch(0.45 0.29 264);
+    color: var(--background);
   }
 
   /* Editorial section eyebrow */
@@ -203,7 +203,49 @@
     font-size: 0.7rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: oklch(1 0 0 / 0.6);
+    color: color-mix(in oklch, var(--foreground) 60%, transparent);
+  }
+
+  /* Brightness slider — custom range input styling */
+  .brightness-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 90px;
+    height: 4px;
+    background: linear-gradient(
+      to right,
+      oklch(0.36 0.2 264),
+      oklch(0.55 0.18 264),
+      oklch(0.95 0.015 264)
+    );
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+  }
+  .brightness-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--foreground);
+    border: 2px solid var(--background);
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 4px oklch(0 0 0 / 0.3);
+  }
+  .brightness-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .brightness-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--foreground);
+    border: 2px solid var(--background);
+    cursor: pointer;
+    box-shadow: 0 1px 4px oklch(0 0 0 / 0.3);
   }
 }
 

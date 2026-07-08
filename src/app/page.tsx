@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { About } from "@/components/portfolio/about";
@@ -9,24 +11,47 @@ import { Research } from "@/components/portfolio/research";
 import { Education } from "@/components/portfolio/education";
 import { Contact } from "@/components/portfolio/contact";
 import { Footer } from "@/components/portfolio/footer";
+import { BrightnessSlider } from "@/components/portfolio/brightness-slider";
+import { LoadingScreen } from "@/components/portfolio/loading-screen";
 import { Toaster as SonnerToaster } from "sonner";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Lock scroll while loading
+    document.body.style.overflow = "hidden";
+    const timer = setTimeout(() => {
+      setLoading(false);
+      document.body.style.overflow = "";
+    }, 1600);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
+      <AnimatePresence mode="wait">
+        {loading && <LoadingScreen key="loading" />}
+      </AnimatePresence>
+
+      {/* Toaster at bottom-left so it doesn't overlap the brightness slider */}
       <SonnerToaster
-        position="bottom-right"
+        position="bottom-left"
         theme="dark"
         toastOptions={{
           style: {
             background: "oklch(1 0 0)",
             border: "1px solid oklch(1 0 0)",
-            color: "oklch(0.45 0.29 264)",
+            color: "oklch(0.36 0.2 264)",
             borderRadius: "4px",
             fontWeight: 500,
           },
         }}
       />
+
       <Navbar />
       <main className="flex-1">
         <Hero />
@@ -38,6 +63,8 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+
+      <BrightnessSlider />
     </div>
   );
 }
