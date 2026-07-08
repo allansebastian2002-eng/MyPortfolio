@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, Mail } from "lucide-react";
 
@@ -8,21 +9,47 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
+  // Gate animations on mount to prevent hydration mismatch.
+  // Server and first client render: no initial styles (final state).
+  // After mount: play the entrance animation.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    setMounted(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
 
-  const fade = (delay: number) =>
-    reduceMotion
-      ? { initial: false, animate: { opacity: 1, y: 0 } }
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, ease: EASE, delay },
-        };
+  // Before mount OR when reduced motion: render at final state, no animation.
+  // After mount (and motion allowed): play staggered entrance.
+  const fade = (delay: number) => {
+    if (!mounted || reduceMotion) {
+      return { initial: false, animate: { opacity: 1, y: 0 } };
+    }
+    return {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      transition: { duration: 0.7, ease: EASE, delay },
+    };
+  };
 
   return (
     <section
       id="home"
       className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 min-h-screen flex items-center"
     >
+      {/* SVG squircle clip-path definition — used by the profile photo */}
+      <svg width="0" height="0" className="absolute" aria-hidden>
+        <defs>
+          <clipPath
+            id="squircle-clip"
+            clipPathUnits="objectBoundingBox"
+          >
+            {/* iOS-style squircle (superellipse) path, normalized 0-1 */}
+            <path d="M0.5,0 C0.66,0 0.78,0.01 0.86,0.05 C0.94,0.09 0.97,0.15 0.99,0.25 C1,0.35 1,0.65 0.99,0.75 C0.97,0.85 0.94,0.91 0.86,0.95 C0.78,0.99 0.66,1 0.5,1 C0.34,1 0.22,0.99 0.14,0.95 C0.06,0.91 0.03,0.85 0.01,0.75 C0,0.65 0,0.35 0.01,0.25 C0.03,0.15 0.06,0.09 0.14,0.05 C0.22,0.01 0.34,0 0.5,0 Z" />
+          </clipPath>
+        </defs>
+      </svg>
+
       <div className="mx-auto max-w-6xl px-5 sm:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* LEFT — text column (7/12) */}
@@ -124,21 +151,23 @@ export function Hero() {
   );
 }
 
-/* Profile photo in a square frame with 1px white border.
-   Uses object-cover so the portrait photo crops nicely to fill the square.
+/* Profile photo in a squircle frame with 1px white border.
+   Uses object-cover so the portrait photo crops nicely to fill the squircle.
    The blue duotone overlay (multiply blend) ties the warm-toned photo
    into the site's blue palette — without making it look artificially tinted. */
 function ProfilePhoto() {
   return (
-    <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden">
+    <div
+      className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden"
+      style={{ clipPath: "url(#squircle-clip)" }}
+    >
       <img
         src="/allan.jpg"
         alt="Allan Sebastian"
         className="absolute inset-0 w-full h-full object-cover"
       />
       {/* Subtle blue duotone overlay — multiply blend pushes the photo's
-          warm tones toward the site palette without desaturating it.
-          Pointer-events-none so it never blocks interaction. */}
+          warm tones toward the site palette without desaturating it. */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-multiply"
         style={{

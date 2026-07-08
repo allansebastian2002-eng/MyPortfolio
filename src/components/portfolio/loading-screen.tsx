@@ -24,60 +24,38 @@ export function LoadingScreen() {
   }, []);
 
   return (
+    // Only the parent uses motion — for the exit fade. No initial styles
+    // means no hydration mismatch on inner elements.
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: EASE }}
       className="fixed inset-0 z-[100] grid place-items-center bg-background"
     >
       <div className="flex flex-col items-center gap-7">
-        {/* Photo in square frame — matches the hero */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="w-20 h-20 border border-border overflow-hidden relative"
-        >
-          <img
-            src="/allan.jpg"
-            alt="Allan Sebastian"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div
-            className="absolute inset-0 pointer-events-none mix-blend-multiply"
-            style={{
-              background:
-                "linear-gradient(135deg, oklch(0.36 0.2 264 / 0.25), oklch(0.36 0.2 264 / 0.1))",
-            }}
-          />
-        </motion.div>
+        {/* Monogram in square frame */}
+        <div className="w-20 h-20 border border-border grid place-items-center">
+          <span className="font-display text-3xl font-bold text-foreground">
+            AS
+          </span>
+        </div>
 
         {/* Name in mono — small, tracked */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.25, duration: 0.4, ease: EASE }}
-          className="font-mono text-[11px] text-foreground/60 tracking-[0.22em] uppercase"
-        >
+        <p className="font-mono text-[11px] text-foreground/60 tracking-[0.22em] uppercase">
           Allan Sebastian
-        </motion.p>
+        </p>
 
         {/* Progress bar — thin, fills with ease-out */}
         <div className="w-44 h-px bg-border overflow-hidden">
-          <motion.div
-            className="h-full bg-foreground"
+          <div
+            className="h-full bg-foreground transition-[width] duration-100 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
 
         {/* Percentage counter */}
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="font-mono text-[10px] text-foreground/40 tracking-wider"
-        >
+        <span className="font-mono text-[10px] text-foreground/40 tracking-wider">
           {String(Math.round(progress)).padStart(3, "0")}
-        </motion.span>
+        </span>
       </div>
     </motion.div>
   );
