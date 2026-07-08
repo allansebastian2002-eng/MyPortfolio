@@ -1,171 +1,154 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown, Mail, Github, Linkedin, FileText, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, Mail } from "lucide-react";
 
-const SOCIALS = [
-  {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:allansebastian2002@gmail.com",
-  },
-  {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/",
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "https://linkedin.com/",
-  },
-];
+// Expo-out easing — the "studio" curve, not the default ease-in-out
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
+  const reduceMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render everything visible with no transform
+  const fade = (delay: number) =>
+    reduceMotion
+      ? { initial: false, animate: { opacity: 1, y: 0 } }
+      : {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.7, ease: EASE, delay },
+        };
+
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 min-h-screen flex items-center"
     >
-      {/* Background grid + radial glow */}
-      <div className="absolute inset-0 bg-grid opacity-60" aria-hidden />
-      <div className="absolute inset-0 bg-radial-emerald" aria-hidden />
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background"
-        aria-hidden
-      />
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          {/* LEFT — text column (7/12) */}
+          <div className="lg:col-span-7 lg:pt-4">
+            <motion.div {...fade(0)}>
+              <span className="eyebrow">Portfolio — 2024</span>
+            </motion.div>
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-          {/* Availability badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Badge
-              variant="outline"
-              className="mb-6 gap-2 border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-medium"
+            {/* Name — Fraunces serif, two lines, terracotta period as the single accent mark */}
+            <motion.h1
+              {...fade(0.08)}
+              className="mt-6 font-serif font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-              </span>
-              Open to opportunities
-            </Badge>
-          </motion.div>
+              Allan
+              <br />
+              Sebastian<span className="text-primary">.</span>
+            </motion.h1>
 
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight"
-          >
-            Allan <span className="text-gradient-emerald">Sebastian</span>
-          </motion.h1>
-
-          {/* Role */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-4 text-lg sm:text-xl text-muted-foreground font-mono"
-          >
-            Blockchain &amp; Web Developer
-          </motion.p>
-
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl"
-          >
-            Computer Science engineer crafting decentralised systems, secure
-            applications, and full-stack experiences with{" "}
-            <span className="text-foreground font-medium">Solidity</span>,{" "}
-            <span className="text-foreground font-medium">React</span>, and{" "}
-            <span className="text-foreground font-medium">Python</span>. Published
-            researcher in blockchain-based social media.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
-          >
-            <Button
-              size="lg"
-              onClick={() =>
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2"
+            {/* Role + location */}
+            <motion.p
+              {...fade(0.18)}
+              className="mt-7 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl"
             >
-              <Sparkles className="w-4 h-4" />
-              View my work
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="gap-2 border-border"
-            >
-              <Mail className="w-4 h-4" />
-              Contact me
-            </Button>
-          </motion.div>
+              Blockchain &amp; web developer building decentralised systems,
+              smart contracts, and full-stack applications from Kerala, India.
+            </motion.p>
 
-          {/* Socials */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="mt-10 flex items-center gap-3"
-          >
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                rel="noreferrer"
-                aria-label={social.label}
-                className="grid place-items-center w-11 h-11 rounded-full border border-border bg-card/50 hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all"
+            {/* CTAs — primary solid terracotta, secondary ghost outline */}
+            <motion.div
+              {...fade(0.28)}
+              className="mt-9 flex flex-wrap items-center gap-3"
+            >
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("projects")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(184,132,90,0.5)]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
               >
-                <social.icon className="w-5 h-5" />
+                See the work
+                <ArrowDownRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+              </button>
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium rounded-md text-foreground transition-colors duration-200 hover:border-foreground/40 hover:bg-foreground/[0.03]"
+              >
+                <Mail className="w-4 h-4" />
+                Get in touch
+              </button>
+            </motion.div>
+
+            {/* Socials — restrained, small, neutral */}
+            <motion.div
+              {...fade(0.36)}
+              className="mt-10 flex items-center gap-5 text-sm text-muted-foreground"
+            >
+              <a
+                href="mailto:allansebastian2002@gmail.com"
+                className="nav-link hover:text-foreground transition-colors"
+              >
+                Email
               </a>
-            ))}
+              <span className="w-px h-3 bg-border" />
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link hover:text-foreground transition-colors"
+              >
+                GitHub
+              </a>
+              <span className="w-px h-3 bg-border" />
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link hover:text-foreground transition-colors"
+              >
+                LinkedIn
+              </a>
+            </motion.div>
+          </div>
+
+          {/* RIGHT — photo column (5/12), offset down to break symmetry */}
+          <motion.div
+            {...fade(0.2)}
+            className="lg:col-span-5 lg:mt-20 flex justify-center lg:justify-end"
+          >
+            <ProfilePhoto />
           </motion.div>
         </div>
-
-        {/* Scroll cue */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="absolute -bottom-2 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground"
-        >
-          <span className="text-xs font-mono uppercase tracking-widest">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6 }}
-          >
-            <ArrowDown className="w-4 h-4" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
+  );
+}
+
+/* Soft-rounded-square profile photo with thin neutral border + soft flat shadow.
+   No glow ring, no blur. Replace the monogram with a real photo by dropping an
+   image into /public/ and swapping the JSX below for <img src="/allan.jpg" ... />. */
+function ProfilePhoto() {
+  return (
+    <div
+      className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-xl bg-card border border-border overflow-hidden shadow-[0_12px_40px_-12px_rgba(0,0,0,0.5)]"
+      style={{ borderRadius: "14px" }}
+    >
+      {/* Monogram placeholder — replace with <img /> when a real photo is available */}
+      <div className="absolute inset-0 grid place-items-center">
+        <span className="font-serif text-7xl text-primary/80 select-none">
+          AS
+        </span>
+      </div>
+      {/* Subtle warm tint to make the placeholder feel intentional */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(120% 80% at 30% 20%, oklch(0.62 0.09 55 / 0.08), transparent 60%)",
+        }}
+      />
+    </div>
   );
 }

@@ -1,73 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Code2,
-  Boxes,
-  Shield,
-  Cpu,
-  Database,
-  Globe,
-  type LucideIcon,
-} from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-
-type SkillGroup = {
-  title: string;
-  icon: LucideIcon;
-  description: string;
-  skills: string[];
-  accent: string;
-};
-
-const SKILL_GROUPS: SkillGroup[] = [
+const SKILL_GROUPS = [
   {
     title: "Web Development",
-    icon: Globe,
-    description: "Frontend, backend, and the languages in between.",
-    accent: "text-primary",
-    skills: ["HTML", "CSS", "JavaScript", "ReactJS", "Java", "SQL"],
+    items: ["HTML", "CSS", "JavaScript", "ReactJS", "Java", "SQL"],
   },
   {
     title: "Systems & Languages",
-    icon: Code2,
-    description: "Core programming languages I work in daily.",
-    accent: "text-primary",
-    skills: ["C", "C++", "Python", "Java", "SQL", "Solidity"],
+    items: ["C", "C++", "Python", "Java", "SQL", "Solidity"],
   },
   {
     title: "Blockchain & Web3",
-    icon: Boxes,
-    description: "Smart contracts and decentralised applications.",
-    accent: "text-primary",
-    skills: ["Solidity", "Ethereum", "Smart Contracts", "ReactJS", "Web3"],
+    items: ["Solidity", "Ethereum", "Smart Contracts", "ReactJS", "Web3"],
   },
   {
     title: "Security & Research",
-    icon: Shield,
-    description: "Defensive security, malware analysis, and open-source supply chain.",
-    accent: "text-primary",
-    skills: ["Ethical Hacking", "Malware Scanning", "PyPI Research", "Vulnerability Analysis"],
+    items: [
+      "Ethical Hacking",
+      "Malware Analysis",
+      "PyPI Supply Chain",
+      "Vulnerability Research",
+    ],
   },
   {
     title: "Data & Infrastructure",
-    icon: Database,
-    description: "Databases, cloud platforms, and storage systems.",
-    accent: "text-primary",
-    skills: ["MySQL", "Cloud Systems", "Database Design", "SQL"],
+    items: ["MySQL", "Cloud Systems", "Database Design"],
   },
   {
     title: "Foundations",
-    icon: Cpu,
-    description: "Theory and engineering fundamentals.",
-    accent: "text-primary",
-    skills: [
-      "Data Structures & Algorithms",
-      "Operating Systems",
-      "Computer Networks",
-      "Machine Learning",
-      "Image Processing",
-    ],
+    items: ["DSA", "Operating Systems", "Networks", "ML", "Image Processing"],
   },
 ];
 
@@ -75,60 +36,51 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-20 sm:py-28 scroll-mt-16 border-t border-border"
+      className="py-24 sm:py-32 scroll-mt-16 border-t border-border"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl"
-        >
-          <span className="font-mono text-sm text-primary">{"// skills"}</span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
-            A toolkit for shipping secure software
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            From low-level systems programming to high-level web frameworks and
-            smart contracts — here&apos;s what I reach for when I build.
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          {/* LEFT — sticky heading (4/12) */}
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <span className="eyebrow">Skills</span>
+              <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
+                What I work with.
+              </h2>
+              <p className="mt-5 text-base text-muted-foreground leading-relaxed max-w-xs">
+                From low-level systems programming to smart contracts and
+                full-stack frameworks — the tools I reach for when I build.
+              </p>
+            </div>
+          </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SKILL_GROUPS.map((group, i) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: i * 0.06 }}
-            >
-              <Card className="glass-card h-full group hover:-translate-y-1 transition-transform duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="grid place-items-center w-10 h-10 rounded-lg bg-primary/15 border border-primary/25 text-primary">
-                      <group.icon className="w-5 h-5" />
-                    </span>
-                    <h3 className="text-base font-semibold">{group.title}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    {group.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {group.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2.5 py-1 text-xs font-mono rounded border border-border bg-background/40 text-muted-foreground group-hover:text-foreground group-hover:border-primary/30 transition-colors"
-                      >
-                        {skill}
+          {/* RIGHT — editorial definition list (8/12) */}
+          <div className="lg:col-span-8">
+            <dl className="divide-y divide-border">
+              {SKILL_GROUPS.map((group) => (
+                <div
+                  key={group.title}
+                  className="py-5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 group"
+                >
+                  <dt className="sm:col-span-4 text-sm font-medium text-foreground">
+                    {group.title}
+                  </dt>
+                  <dd className="sm:col-span-8 text-sm text-muted-foreground leading-relaxed">
+                    {group.items.map((item, i) => (
+                      <span key={item}>
+                        <span className="transition-colors duration-200 group-hover:text-foreground/80">
+                          {item}
+                        </span>
+                        {i < group.items.length - 1 && (
+                          <span className="mx-2 text-border">·</span>
+                        )}
                       </span>
                     ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
     </section>

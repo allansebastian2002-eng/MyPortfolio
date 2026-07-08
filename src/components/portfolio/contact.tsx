@@ -1,39 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, ArrowUpRight, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { Copy, Check, ArrowUpRight } from "lucide-react";
 import { toast } from "sonner";
 
 const CONTACTS = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "allansebastian2002@gmail.com",
-    href: "mailto:allansebastian2002@gmail.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+91 86063 19700",
-    href: "tel:+918606319700",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Kerala, India",
-    href: undefined,
-  },
+  { label: "Email", value: "allansebastian2002@gmail.com", href: "mailto:allansebastian2002@gmail.com" },
+  { label: "Phone", value: "+91 86063 19700", href: "tel:+918606319700" },
+  { label: "Location", value: "Kerala, India", href: undefined },
 ];
 
 export function Contact() {
+  const [copied, setCopied] = useState(false);
+
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText("allansebastian2002@gmail.com");
-      toast.success("Email copied to clipboard", {
+      setCopied(true);
+      toast.success("Email copied", {
         description: "allansebastian2002@gmail.com",
       });
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       toast.error("Couldn't copy email");
     }
@@ -42,112 +29,75 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-20 sm:py-28 scroll-mt-16 border-t border-border"
+      className="pt-20 sm:pt-24 pb-24 sm:pb-32 scroll-mt-16 border-t border-border"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl"
-        >
-          <span className="font-mono text-sm text-primary">{"// contact"}</span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
-            Let&apos;s build something
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Whether it&apos;s a decentralised product, a security research
-            collaboration, or a full-stack web project — I&apos;m always happy
-            to talk. Drop me a line and I&apos;ll get back to you.
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          {/* LEFT — heading + CTA (7/12) */}
+          <div className="lg:col-span-7">
+            <span className="eyebrow">Contact</span>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.05]">
+              Let&apos;s build
+              <br />
+              something<span className="text-primary">.</span>
+            </h2>
+            <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
+              Whether it&apos;s a decentralised product, a security research
+              collaboration, or a full-stack web project — I&apos;m always
+              happy to talk. Drop me a line and I&apos;ll get back to you.
+            </p>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-5 gap-5">
-          {/* Contact info cards */}
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {CONTACTS.map((contact, i) => {
-              const Wrapper = contact.href ? "a" : "div";
-              return (
-                <motion.div
-                  key={contact.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                >
-                  <Card
-                    className={`glass-card h-full ${
-                      contact.href
-                        ? "group hover:-translate-y-1 transition-transform"
-                        : ""
-                    }`}
-                  >
-                    <CardContent className="p-5">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="mailto:allansebastian2002@gmail.com"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(184,132,90,0.5)]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+              >
+                Send a message
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <button
+                onClick={handleCopyEmail}
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium rounded-md text-foreground transition-colors duration-200 hover:border-foreground/40 hover:bg-foreground/[0.03]"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-primary" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+                {copied ? "Copied" : "Copy email"}
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT — contact details as clean list (4/12 offset) */}
+          <div className="lg:col-span-4 lg:col-start-9">
+            <dl className="divide-y divide-border border-y border-border">
+              {CONTACTS.map((contact) => {
+                const Wrapper = contact.href ? "a" : "div";
+                return (
+                  <div key={contact.label} className="py-4">
+                    <dt className="eyebrow mb-1">{contact.label}</dt>
+                    <dd className="text-sm text-foreground break-words">
                       <Wrapper
                         {...(contact.href ? { href: contact.href } : {})}
                         {...(contact.href?.startsWith("http")
                           ? { target: "_blank", rel: "noreferrer" }
                           : {})}
-                        className="block"
+                        className={
+                          contact.href
+                            ? "nav-link hover:text-primary transition-colors"
+                            : ""
+                        }
                       >
-                        <contact.icon className="w-5 h-5 text-primary mb-3" />
-                        <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
-                          {contact.label}
-                        </div>
-                        <div className="text-sm font-medium break-words flex items-start justify-between gap-2">
-                          <span>{contact.value}</span>
-                          {contact.href && (
-                            <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:rotate-12 transition-all shrink-0 mt-0.5" />
-                          )}
-                        </div>
+                        {contact.value}
                       </Wrapper>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
           </div>
-
-          {/* CTA card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2"
-          >
-            <Card className="glass-card h-full bg-gradient-to-br from-primary/10 via-card/40 to-card/40 border-primary/20">
-              <CardContent className="p-6 sm:p-7 h-full flex flex-col">
-                <h3 className="text-lg font-semibold">Reach out directly</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
-                  Prefer email? Copy my address and write to me — I usually
-                  respond within a day or two.
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <Button
-                    onClick={handleCopyEmail}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Mail className="w-4 h-4" />
-                    Copy email
-                  </Button>
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2"
-                  >
-                    <a href="mailto:allansebastian2002@gmail.com">
-                      <Send className="w-4 h-4" />
-                      Send a message
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
         </div>
       </div>
     </section>

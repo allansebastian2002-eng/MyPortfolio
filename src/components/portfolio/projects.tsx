@@ -1,62 +1,57 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight, Boxes, Bug, Stethoscope } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 type Project = {
   title: string;
   tagline: string;
   description: string;
-  icon: typeof Boxes;
   stack: string[];
   highlights: string[];
   impact: string;
 };
 
-const PROJECTS: Project[] = [
+const FEATURED: Project = {
+  title: "Decentralized Social Media",
+  tagline: "Web3 · Ethereum · Privacy-first",
+  description:
+    "A blockchain-based social platform where users can post content and tip each other directly using Ethereum — eliminating the intermediaries that mine and monetise personal data in today's centralised networks. Posts live on-chain, content ownership is verifiable, and tipping is handled entirely by smart contracts.",
+  stack: ["ReactJS", "Solidity", "Ethereum", "Smart Contracts"],
+  highlights: [
+    "Designed and shipped the ReactJS frontend with wallet integration",
+    "Authored Solidity smart contracts for posts and on-chain tipping",
+    "Eliminated central data silos by storing posts on-chain",
+  ],
+  impact:
+    "Became the basis of a peer-reviewed publication on decentralised social systems.",
+};
+
+const SECONDARY: Project[] = [
   {
-    title: "Decentralized Social Media",
-    tagline: "Web3 · Ethereum · Privacy-first",
-    icon: Boxes,
-    description:
-      "A blockchain-based social platform where users can post content and tip each other directly using Ethereum — eliminating the intermediaries that mine and monetise personal data in today's centralised networks.",
-    stack: ["ReactJS", "Solidity", "Ethereum", "Smart Contracts"],
-    highlights: [
-      "Designed and shipped ReactJS frontend with wallet integration",
-      "Authored Solidity smart contracts for posts and on-chain tipping",
-      "Eliminated central data silos by storing posts on-chain",
-    ],
-    impact:
-      "Became the basis of a peer-reviewed publication on decentralised social systems.",
-  },
-  {
-    title: "Bad Snake — PyPI Malware Scanning",
+    title: "Bad Snake",
     tagline: "Security Research · Supply Chain",
-    icon: Bug,
     description:
-      "A research project investigating the vulnerability of open-source repositories like PyPI to malware injection. The work analyses detection gaps and proposes improvements to package-scanning pipelines to better protect downstream users.",
-    stack: ["Python", "Malware Analysis", "PyPI", "Security Research"],
+      "Research into the vulnerability of open-source repositories like PyPI to malware injection. Analyses detection gaps and proposes improvements to package-scanning pipelines.",
+    stack: ["Python", "Malware Analysis", "PyPI"],
     highlights: [
-      "Catalogued common attack vectors against open-source package indexes",
+      "Catalogued attack vectors against open-source package indexes",
       "Prototyped detection improvements for malicious Python packages",
-      "Advocated stronger collaboration between security researchers and maintainers",
     ],
     impact:
-      "Highlights concrete weaknesses in the open-source software supply chain.",
+      "Highlights concrete weaknesses in the open-source supply chain.",
   },
   {
-    title: "Smart Medical Prescription Service",
+    title: "Smart Medical Prescription",
     tagline: "Full-stack · Cloud · Healthcare",
-    icon: Stethoscope,
     description:
-      "A cloud-based prescription management platform that bridges doctors and patients. Each patient record is keyed by a unique code so prescriptions stay organised, retrievable, and accessible from any browser.",
-    stack: ["Web Platform", "MySQL", "Cloud", "Database Design"],
+      "A cloud-based prescription management platform bridging doctors and patients. Each patient record is keyed by a unique code so prescriptions stay organised and retrievable from any browser.",
+    stack: ["Web", "MySQL", "Cloud"],
     highlights: [
-      "Built a web-based portal serving both doctors and patients",
-      "Designed a MySQL schema with unique patient codes for record lookup",
-      "Deployed as a cloud-based system for anywhere-access",
+      "Built a web portal serving both doctors and patients",
+      "Designed a MySQL schema with unique patient codes for lookup",
     ],
     impact:
       "Streamlines prescription workflows between clinicians and patients.",
@@ -64,96 +59,150 @@ const PROJECTS: Project[] = [
 ];
 
 export function Projects() {
+  const reduceMotion = useReducedMotion();
+
+  const cardHover = reduceMotion
+    ? {}
+    : {
+        whileHover: { y: -3, scale: 1.005 },
+        transition: { duration: 0.18, ease: EASE },
+      };
+
+  const featuredHover = reduceMotion
+    ? {}
+    : {
+        whileHover: { y: -3 },
+        transition: { duration: 0.18, ease: EASE },
+      };
+
   return (
     <section
       id="projects"
-      className="relative py-20 sm:py-28 scroll-mt-16 border-t border-border"
+      className="py-20 sm:py-24 scroll-mt-16 border-t border-border"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl"
-        >
-          <span className="font-mono text-sm text-primary">{"// projects"}</span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
-            Things I&apos;ve built
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            A selection of projects spanning decentralised systems, security
-            research, and full-stack web applications.
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        {/* Section header */}
+        <div className="flex items-end justify-between gap-6 flex-wrap">
+          <div className="max-w-2xl">
+            <span className="eyebrow">Projects</span>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-medium tracking-tight">
+              Things I&apos;ve built.
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xs">
+            Three projects spanning decentralised systems, security research,
+            and full-stack web.
           </p>
+        </div>
+
+        {/* FEATURED — full width, larger, more detail */}
+        <motion.div
+          {...featuredHover}
+          className="mt-10 surface rounded-lg p-7 sm:p-9 lg:p-10 transition-colors duration-200 hover:border-primary/30"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+            {/* Left — meta + description */}
+            <div className="lg:col-span-7">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="eyebrow text-primary">Featured</span>
+                <span className="w-8 h-px bg-border" />
+                <span className="eyebrow">{FEATURED.tagline}</span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight">
+                {FEATURED.title}
+              </h3>
+              <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground">
+                {FEATURED.description}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {FEATURED.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="font-mono text-xs px-2.5 py-1 rounded border border-border text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — highlights + impact */}
+            <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-10">
+              <p className="eyebrow mb-3">Highlights</p>
+              <ul className="space-y-2.5">
+                {FEATURED.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="flex items-start gap-2.5 text-sm text-foreground/85"
+                  >
+                    <span className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 pt-5 border-t border-border">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="text-primary font-medium">Impact —</span>{" "}
+                  {FEATURED.impact}
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {PROJECTS.map((project, i) => (
+        {/* SECONDARY — two smaller cards side by side */}
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+          {SECONDARY.map((project) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className={i === 0 ? "lg:col-span-2" : ""}
+              {...cardHover}
+              className="surface rounded-lg p-6 sm:p-7 transition-colors duration-200 hover:border-primary/30 group"
             >
-              <Card className="glass-card h-full group relative overflow-hidden hover:-translate-y-1 transition-transform duration-300">
-                <CardContent className="p-6 sm:p-7">
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="flex items-start gap-3">
-                      <span className="grid place-items-center w-11 h-11 rounded-lg bg-primary/15 border border-primary/25 text-primary shrink-0">
-                        <project.icon className="w-5 h-5" />
-                      </span>
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-semibold leading-tight">
-                          {project.title}
-                        </h3>
-                        <p className="mt-1 text-xs font-mono text-primary">
-                          {project.tagline}
-                        </p>
-                      </div>
-                    </div>
-                    <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:rotate-12 transition-all" />
-                  </div>
-
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-5">
-                    {project.description}
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div>
+                  <h3 className="font-serif text-xl font-medium tracking-tight">
+                    {project.title}
+                  </h3>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">
+                    {project.tagline}
                   </p>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
 
-                  <ul className="space-y-2 mb-5">
-                    {project.highlights.map((h) => (
-                      <li
-                        key={h}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
-                      >
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {project.description}
+              </p>
 
-                  <div className="flex flex-wrap items-center gap-1.5 mb-4">
-                    {project.stack.map((tech) => (
-                      <Badge
-                        key={tech}
-                        variant="secondary"
-                        className="font-mono text-[11px] bg-secondary/60"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
+              <ul className="mt-4 space-y-2">
+                {project.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="flex items-start gap-2 text-sm text-foreground/80"
+                  >
+                    <span className="mt-1.5 w-1 h-1 rounded-full bg-muted-foreground/60 shrink-0" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
 
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-xs text-muted-foreground">
-                      <span className="text-primary font-semibold">
-                        Impact —
-                      </span>{" "}
-                      {project.impact}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {project.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="font-mono text-[11px] px-2 py-0.5 rounded border border-border text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-5 pt-4 border-t border-border">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="text-primary font-medium">Impact —</span>{" "}
+                  {project.impact}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
