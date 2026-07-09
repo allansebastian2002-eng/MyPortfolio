@@ -47,18 +47,19 @@ export function Hero() {
       // ── Phase 1: Scatter letters to random positions ──
       // Runs before paint (useGSAP = layout effect), so no flash.
       // The loading screen covers this period anyway (2s).
+      // Letters are VISIBLE (opacity 1) so the user can see them scattered.
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
       letters.forEach((letter) => {
-        const scatterX = (Math.random() - 0.5) * vw * 1.3;
-        const scatterY = (Math.random() - 0.5) * vh * 1.4;
-        const scatterRot = (Math.random() - 0.5) * 50;
+        const scatterX = (Math.random() - 0.5) * vw * 1.2;
+        const scatterY = (Math.random() - 0.5) * vh * 1.3;
+        const scatterRot = (Math.random() - 0.5) * 40;
         gsap.set(letter, {
           x: scatterX,
           y: scatterY,
           rotation: scatterRot,
-          opacity: 0,
+          opacity: 1,
         });
       });
 
@@ -88,7 +89,6 @@ export function Hero() {
         x: 0,
         y: 0,
         rotation: 0,
-        opacity: 1,
         stagger: 0.012,
         ease: "expo.out",
         duration: 0.55,
