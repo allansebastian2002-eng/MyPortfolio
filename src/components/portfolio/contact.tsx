@@ -7,6 +7,7 @@ import { toast } from "sonner";
 const CONTACTS = [
   { label: "Email", value: "allansebastian2002@gmail.com", href: "mailto:allansebastian2002@gmail.com" },
   { label: "Phone", value: "+91 86063 19700", href: "tel:+918606319700" },
+  { label: "LinkedIn", value: "in/allan-sebastian", href: "https://www.linkedin.com/in/allan-sebastian" },
   { label: "Location", value: "Kerala, India", href: undefined },
 ];
 

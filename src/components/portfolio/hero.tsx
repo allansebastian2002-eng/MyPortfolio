@@ -128,7 +128,7 @@ export function Hero() {
               </a>
               <span className="w-px h-3 bg-border" />
               <a
-                href="https://linkedin.com/"
+                href="https://www.linkedin.com/in/allan-sebastian"
                 target="_blank"
                 rel="noreferrer"
                 className="nav-link hover:text-foreground transition-colors"
