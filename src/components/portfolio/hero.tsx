@@ -9,17 +9,21 @@ import { ArrowDownRight, Mail, ArrowDown } from "lucide-react";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* Split text into individual letter spans. Each is inline-block so GSAP
-   can transform it independently without breaking the text flow. */
-function splitToLetters(text: string, keyPrefix: string) {
-  return text.split("").map((char, i) => (
-    <span
-      key={`${keyPrefix}-${i}`}
-      className="hero-letter inline-block"
-      style={{ willChange: "transform, opacity" }}
-    >
-      {char === " " ? "\u00A0" : char}
-    </span>
-  ));
+   can transform it independently without breaking the text flow.
+   The last character can be given the accent color (for the period). */
+function splitToLetters(text: string, keyPrefix: string, accentLast = false) {
+  return text.split("").map((char, i) => {
+    const isLast = i === text.length - 1;
+    return (
+      <span
+        key={`${keyPrefix}-${i}`}
+        className={`hero-letter inline-block ${accentLast && isLast ? "text-accent" : ""}`}
+        style={{ willChange: "transform, opacity" }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    );
+  });
 }
 
 export function Hero() {
@@ -168,12 +172,12 @@ export function Hero() {
               <span className="eyebrow">Portfolio — 2024</span>
             </div>
 
-            {/* Name — each letter is a span that GSAP scatters & assembles */}
-            <h1 className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em]">
+            {/* Name — each letter is a span that GSAP scatters & assembles.
+                whitespace-nowrap prevents the period from wrapping to a new line. */}
+            <h1 className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em] whitespace-nowrap">
               {splitToLetters("Allan", "line1")}
               <br />
-              {splitToLetters("Sebastian", "line2")}
-              <span className="text-accent hero-letter inline-block">.</span>
+              {splitToLetters("Sebastian.", "line2", true)}
             </h1>
 
             {/* Role + location */}
