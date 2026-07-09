@@ -35,7 +35,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 min-h-screen flex items-center"
+      className="relative pt-28 pb-16 sm:pt-36 sm:pb-28 min-h-screen flex items-center"
     >
       {/* SVG squircle clip-path definition — used by the profile photo */}
       <svg width="0" height="0" className="absolute" aria-hidden>
@@ -51,7 +51,7 @@ export function Hero() {
       </svg>
 
       <div className="mx-auto max-w-6xl px-5 sm:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           {/* LEFT — text column (7/12) */}
           <div className="lg:col-span-7 lg:pt-4">
             <motion.div {...fade(0)}>
@@ -61,7 +61,7 @@ export function Hero() {
             {/* Name — Space Grotesk display, huge, two lines, yellow period */}
             <motion.h1
               {...fade(0.08)}
-              className="mt-6 font-display font-bold text-6xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.92] tracking-[-0.03em]"
+              className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em]"
             >
               Allan
               <br />
@@ -71,7 +71,7 @@ export function Hero() {
             {/* Role + location */}
             <motion.p
               {...fade(0.18)}
-              className="mt-8 text-lg sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light"
+              className="mt-6 sm:mt-8 text-base sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light"
             >
               Blockchain &amp; web developer building decentralised systems,
               smart contracts, and full-stack applications from Kerala, India.
@@ -80,7 +80,7 @@ export function Hero() {
             {/* CTAs — primary solid white (inverts to blue on hover), secondary white-outline */}
             <motion.div
               {...fade(0.28)}
-              className="mt-9 flex flex-wrap items-center gap-3"
+              className="mt-7 sm:mt-9 flex flex-wrap items-center gap-3"
             >
               <button
                 onClick={() =>
@@ -109,7 +109,7 @@ export function Hero() {
             {/* Socials — restrained, small, with white-line separators */}
             <motion.div
               {...fade(0.36)}
-              className="mt-10 flex items-center gap-5 text-sm text-foreground/70"
+              className="mt-8 sm:mt-10 flex items-center gap-4 sm:gap-5 text-sm text-foreground/70"
             >
               <a
                 href="mailto:allansebastian2002@gmail.com"
@@ -138,10 +138,10 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT — photo column (5/12), offset down to break symmetry */}
+          {/* RIGHT — photo column (5/12). Centered on mobile, offset down on desktop. */}
           <motion.div
             {...fade(0.2)}
-            className="lg:col-span-5 lg:mt-20 flex justify-center lg:justify-end"
+            className="lg:col-span-5 flex justify-center lg:justify-end lg:mt-20"
           >
             <ProfilePhoto />
           </motion.div>
@@ -158,7 +158,7 @@ export function Hero() {
 function ProfilePhoto() {
   return (
     <div
-      className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden"
+      className="relative w-40 h-40 sm:w-64 sm:h-64 lg:w-72 lg:h-72 border border-border overflow-hidden"
       style={{ clipPath: "url(#squircle-clip)" }}
     >
       <img

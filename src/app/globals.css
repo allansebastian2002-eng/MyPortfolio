@@ -210,7 +210,7 @@
   .brightness-range {
     -webkit-appearance: none;
     appearance: none;
-    width: 90px;
+    width: 70px;
     height: 4px;
     background: linear-gradient(
       to right,
@@ -222,6 +222,11 @@
     outline: none;
     cursor: pointer;
     border: none;
+  }
+  @media (min-width: 640px) {
+    .brightness-range {
+      width: 90px;
+    }
   }
   .brightness-range::-webkit-slider-thumb {
     -webkit-appearance: none;

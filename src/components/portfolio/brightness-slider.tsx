@@ -73,7 +73,7 @@ export function BrightnessSlider() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-3.5 py-2 surface rounded-full"
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-3.5 py-2 surface rounded-full"
       style={{
         background:
           "color-mix(in oklch, var(--background) 88%, transparent)",

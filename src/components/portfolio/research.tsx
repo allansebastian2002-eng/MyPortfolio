@@ -6,20 +6,20 @@ export function Research() {
   return (
     <section
       id="research"
-      className="py-20 sm:py-24 scroll-mt-16 border-t border-border"
+      className="py-16 sm:py-24 scroll-mt-16 border-t border-border"
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* Section header */}
         <div className="max-w-2xl">
           <span className="eyebrow">Research</span>
-          <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
+          <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
             Published work.
           </h2>
         </div>
 
         {/* Single featured publication — white-bordered surface */}
-        <article className="mt-10 surface rounded-md p-7 sm:p-9 lg:p-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+        <article className="mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10">
             {/* Left — citation meta */}
             <div className="lg:col-span-3">
               <p className="eyebrow text-accent mb-3">Published</p>
@@ -34,12 +34,12 @@ export function Research() {
 
             {/* Right — title + abstract */}
             <div className="lg:col-span-9 lg:border-l lg:border-border lg:pl-10">
-              <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-[-0.02em] leading-tight">
+              <h3 className="font-display text-lg sm:text-2xl lg:text-3xl font-bold tracking-[-0.02em] leading-tight">
                 Decentralized Social Media Using Ethereum Blockchain and
                 Solidity Smart Contract
               </h3>
 
-              <p className="mt-5 text-base leading-relaxed text-foreground/85 font-light">
+              <p className="mt-4 sm:mt-5 text-sm sm:text-base leading-relaxed text-foreground/85 font-light">
                 The paper investigates how current centralised social media
                 companies harvest personal data and sell it for profit, and
                 proposes a decentralised alternative built on the Ethereum
@@ -49,7 +49,7 @@ export function Research() {
                 data and interactions.
               </p>
 
-              <p className="mt-4 text-sm text-foreground/70 leading-relaxed font-light">
+              <p className="mt-4 text-xs sm:text-sm text-foreground/70 leading-relaxed font-light">
                 Published in the{" "}
                 <span className="text-foreground font-medium">
                   International Journal of Innovative Research in Computer and

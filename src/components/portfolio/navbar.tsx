@@ -50,8 +50,8 @@ export function Navbar() {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="flex h-16 items-center justify-between">
+      <nav className="mx-auto max-w-6xl px-4 sm:px-8">
+        <div className="flex h-14 sm:h-16 items-center justify-between">
           {/* Wordmark — display font, tight */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -102,7 +102,7 @@ export function Navbar() {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden overflow-hidden bg-background border-b border-border"
           >
-            <div className="px-5 py-4 flex flex-col">
+            <div className="px-4 py-3 flex flex-col">
               {NAV_LINKS.map((link) => (
                 <button
                   key={link.href}
