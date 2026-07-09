@@ -3,56 +3,120 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { ArrowDownRight, Mail } from "lucide-react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowDownRight, Mail, ArrowDown } from "lucide-react";
 
-// Register the React hook once
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+/* Split text into individual letter spans. Each is inline-block so GSAP
+   can transform it independently without breaking the text flow. */
+function splitToLetters(text: string, keyPrefix: string) {
+  return text.split("").map((char, i) => (
+    <span
+      key={`${keyPrefix}-${i}`}
+      className="hero-letter inline-block"
+      style={{ willChange: "transform, opacity" }}
+    >
+      {char === " " ? "\u00A0" : char}
+    </span>
+  ));
+}
 
 export function Hero() {
   const container = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      // Respect reduced motion — skip all animations
       const reduce = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
-      if (reduce) return;
 
-      // Timeline with expo.out — the signature "studio smooth" curve.
-      // Slight overlaps create a natural cascade, not a mechanical stagger.
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const letters =
+        gsap.utils.toArray<HTMLElement>(".hero-letter");
 
-      tl.from("[data-anim='eyebrow']", {
-          opacity: 0,
-          y: 14,
-          duration: 0.7,
-        })
-        .from(
-          "[data-anim='name']",
-          { opacity: 0, y: 28, duration: 1.0 },
-          "-=0.35"
-        )
-        .from(
-          "[data-anim='role']",
-          { opacity: 0, y: 20, duration: 0.8 },
-          "-=0.55"
-        )
-        .from(
-          "[data-anim='cta']",
-          { opacity: 0, y: 16, duration: 0.7 },
-          "-=0.45"
-        )
-        .from(
-          "[data-anim='socials']",
-          { opacity: 0, y: 14, duration: 0.6 },
-          "-=0.35"
-        )
-        .from(
-          "[data-anim='photo']",
-          { opacity: 0, y: 30, duration: 0.9 },
-          "-=0.7"
+      if (reduce) {
+        // Show everything normally — no scatter, no pin
+        gsap.set(letters, { opacity: 1 });
+        gsap.set(
+          ".hero-eyebrow, .hero-role, .hero-cta, .hero-socials, .hero-photo",
+          { opacity: 1, y: 0 }
         );
+        return;
+      }
+
+      // ── Phase 1: Scatter letters to random positions ──
+      // Runs before paint (useGSAP = layout effect), so no flash.
+      // The loading screen covers this period anyway (2s).
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      letters.forEach((letter) => {
+        const scatterX = (Math.random() - 0.5) * vw * 1.3;
+        const scatterY = (Math.random() - 0.5) * vh * 1.4;
+        const scatterRot = (Math.random() - 0.5) * 50;
+        gsap.set(letter, {
+          x: scatterX,
+          y: scatterY,
+          rotation: scatterRot,
+          opacity: 0,
+        });
+      });
+
+      // Hide other hero elements until letters assemble
+      const others = gsap.utils.toArray<HTMLElement>(
+        ".hero-eyebrow, .hero-role, .hero-cta, .hero-socials, .hero-photo"
+      );
+      gsap.set(others, { opacity: 0, y: 20 });
+
+      // ── Phase 2: Scroll-triggered assembly ──
+      // Pin the hero so it stays fixed while letters fly into place.
+      // Timeline is scrubbed to scroll position — user controls the speed.
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top top",
+          end: "+=500",
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+        },
+      });
+
+      // Letters fly to home position (x:0, y:0, rotation:0) with a
+      // slight stagger so they arrive in a wave, not all at once.
+      tl.to(letters, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        opacity: 1,
+        stagger: 0.012,
+        ease: "expo.out",
+        duration: 0.55,
+      });
+
+      // Other elements fade in after letters are mostly assembled
+      tl.to(
+        others,
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.07,
+          ease: "expo.out",
+          duration: 0.35,
+        },
+        "-=0.15"
+      );
+
+      // Scroll hint fades out as user scrolls
+      gsap.to(".hero-scroll-hint", {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top top",
+          end: "+=150",
+          scrub: true,
+        },
+      });
     },
     { scope: container }
   );
@@ -70,7 +134,6 @@ export function Hero() {
             id="squircle-clip"
             clipPathUnits="objectBoundingBox"
           >
-            {/* iOS-style squircle (superellipse) path, normalized 0-1 */}
             <path d="M0.5,0 C0.66,0 0.78,0.01 0.86,0.05 C0.94,0.09 0.97,0.15 0.99,0.25 C1,0.35 1,0.65 0.99,0.75 C0.97,0.85 0.94,0.91 0.86,0.95 C0.78,0.99 0.66,1 0.5,1 C0.34,1 0.22,0.99 0.14,0.95 C0.06,0.91 0.03,0.85 0.01,0.75 C0,0.65 0,0.35 0.01,0.25 C0.03,0.15 0.06,0.09 0.14,0.05 C0.22,0.01 0.34,0 0.5,0 Z" />
           </clipPath>
         </defs>
@@ -80,34 +143,26 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           {/* LEFT — text column (7/12) */}
           <div className="lg:col-span-7 lg:pt-4">
-            <div data-anim="eyebrow">
+            <div className="hero-eyebrow">
               <span className="eyebrow">Portfolio — 2024</span>
             </div>
 
-            {/* Name — Space Grotesk display, huge, two lines, yellow period */}
-            <h1
-              data-anim="name"
-              className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em]"
-            >
-              Allan
+            {/* Name — each letter is a span that GSAP scatters & assembles */}
+            <h1 className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em]">
+              {splitToLetters("Allan", "line1")}
               <br />
-              Sebastian<span className="text-accent">.</span>
+              {splitToLetters("Sebastian", "line2")}
+              <span className="text-accent hero-letter inline-block">.</span>
             </h1>
 
             {/* Role + location */}
-            <p
-              data-anim="role"
-              className="mt-6 sm:mt-8 text-base sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light"
-            >
+            <p className="hero-role mt-6 sm:mt-8 text-base sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light">
               Blockchain &amp; web developer building decentralised systems,
               smart contracts, and full-stack applications from Kerala, India.
             </p>
 
-            {/* CTAs — primary solid white (inverts to blue on hover), secondary white-outline */}
-            <div
-              data-anim="cta"
-              className="mt-7 sm:mt-9 flex flex-wrap items-center gap-3"
-            >
+            {/* CTAs */}
+            <div className="hero-cta mt-7 sm:mt-9 flex flex-wrap items-center gap-3">
               <button
                 onClick={() =>
                   document
@@ -132,11 +187,8 @@ export function Hero() {
               </button>
             </div>
 
-            {/* Socials — restrained, small, with white-line separators */}
-            <div
-              data-anim="socials"
-              className="mt-8 sm:mt-10 flex items-center gap-4 sm:gap-5 text-sm text-foreground/70"
-            >
+            {/* Socials */}
+            <div className="hero-socials mt-8 sm:mt-10 flex items-center gap-4 sm:gap-5 text-sm text-foreground/70">
               <a
                 href="mailto:allansebastian2002@gmail.com"
                 className="nav-link hover:text-foreground transition-colors"
@@ -165,22 +217,24 @@ export function Hero() {
           </div>
 
           {/* RIGHT — photo column (5/12). Centered on mobile, offset down on desktop. */}
-          <div
-            data-anim="photo"
-            className="lg:col-span-5 flex justify-center lg:justify-end lg:mt-20"
-          >
+          <div className="hero-photo lg:col-span-5 flex justify-center lg:justify-end lg:mt-20">
             <ProfilePhoto />
           </div>
         </div>
+      </div>
+
+      {/* Scroll hint — visible with scattered letters, fades on scroll */}
+      <div className="hero-scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-foreground/40 pointer-events-none">
+        <span className="font-mono text-[10px] tracking-[0.2em] uppercase">
+          Scroll
+        </span>
+        <ArrowDown className="w-3 h-3 animate-bounce" />
       </div>
     </section>
   );
 }
 
-/* Profile photo in a squircle frame with 1px white border.
-   Uses object-cover so the portrait photo crops nicely to fill the squircle.
-   The blue duotone overlay (multiply blend) ties the warm-toned photo
-   into the site's blue palette — without making it look artificially tinted. */
+/* Profile photo in a squircle frame with 1px white border. */
 function ProfilePhoto() {
   return (
     <div
@@ -192,8 +246,6 @@ function ProfilePhoto() {
         alt="Allan Sebastian"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      {/* Subtle blue duotone overlay — multiply blend pushes the photo's
-          warm tones toward the site palette without desaturating it. */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-multiply"
         style={{
