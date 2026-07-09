@@ -47,17 +47,35 @@ export function Hero() {
       // ── Phase 1: Scatter letters to random positions ──
       // Runs before paint (useGSAP = layout effect), so no flash.
       // The loading screen covers this period anyway (2s).
-      // Letters are VISIBLE (opacity 1) so the user can see them scattered.
-      // Range kept within viewport so no letter goes off-screen.
+      // Letters are VISIBLE (opacity 0.9) so the user can see them scattered.
+      // Scatter is clamped per-letter so none go off-screen.
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const margin = 60; // px margin from viewport edges
 
       letters.forEach((letter) => {
-        // Scatter within visible viewport range so all letters stay on screen.
-        // ±30% horizontal, ±25% vertical — dramatic but visible.
-        const scatterX = (Math.random() - 0.5) * vw * 0.6;
-        const scatterY = (Math.random() - 0.5) * vh * 0.4;
+        // Get the letter's home position (where it sits in normal flow)
+        const homeRect = letter.getBoundingClientRect();
+        const homeX = homeRect.left;
+        const homeY = homeRect.top;
+
+        // Calculate max scatter that keeps the letter on screen
+        const maxLeft = homeX - margin; // how far left we can go
+        const maxRight = vw - homeX - homeRect.width - margin; // how far right
+        const maxUp = homeY - margin; // how far up
+        const maxDown = vh - homeY - homeRect.height - margin; // how far down
+
+        // Random scatter within the safe range (at least ±50px so it moves)
+        const scatterX = gsap.utils.random(
+          -Math.max(50, maxLeft),
+          Math.max(50, maxRight)
+        );
+        const scatterY = gsap.utils.random(
+          -Math.max(50, maxUp),
+          Math.max(50, maxDown)
+        );
         const scatterRot = (Math.random() - 0.5) * 45;
+
         gsap.set(letter, {
           x: scatterX,
           y: scatterY,
