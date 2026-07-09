@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import { ScrollReveal } from "./scroll-reveal";
 
 export function Research() {
   return (
@@ -10,15 +11,15 @@ export function Research() {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* Section header */}
-        <div className="max-w-2xl">
+        <ScrollReveal as="div" y={20} duration={0.7} className="max-w-2xl">
           <span className="eyebrow">Research</span>
           <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
             Published work.
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* Single featured publication — white-bordered surface */}
-        <article className="mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10">
+        <ScrollReveal as="article" y={32} duration={0.8} delay={0.1} className="mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10">
             {/* Left — citation meta */}
             <div className="lg:col-span-3">
@@ -69,7 +70,7 @@ export function Research() {
               </a>
             </div>
           </div>
-        </article>
+        </ScrollReveal>
       </div>
     </section>
   );

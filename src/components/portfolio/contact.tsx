@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Copy, Check, ArrowUpRight, FileText, FileImage, Download } from "lucide-react";
 import { toast } from "sonner";
+import { ScrollReveal } from "./scroll-reveal";
 
 const CONTACTS = [
   { label: "Email", value: "allansebastian2002@gmail.com", href: "mailto:allansebastian2002@gmail.com" },
@@ -53,7 +54,7 @@ export function Contact() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16">
           {/* LEFT — heading + CTA (7/12) */}
-          <div className="lg:col-span-7">
+          <ScrollReveal as="div" y={28} duration={0.8} className="lg:col-span-7">
             <span className="eyebrow">Contact</span>
             <h2 className="mt-3 font-display text-3xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[0.95]">
               Let&apos;s build
@@ -110,10 +111,10 @@ export function Contact() {
                 </button>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* RIGHT — contact details as clean list (4/12 offset) */}
-          <div className="lg:col-span-4 lg:col-start-9">
+          <ScrollReveal as="div" y={24} duration={0.7} delay={0.15} className="lg:col-span-4 lg:col-start-9">
             <dl className="divide-y divide-border border-y border-border">
               {CONTACTS.map((contact) => {
                 const Wrapper = contact.href ? "a" : "div";
@@ -139,7 +140,7 @@ export function Contact() {
                 );
               })}
             </dl>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

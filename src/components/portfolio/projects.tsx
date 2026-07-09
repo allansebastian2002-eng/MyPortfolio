@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import { ScrollReveal } from "./scroll-reveal";
 
 type Project = {
   title: string;
@@ -63,7 +64,7 @@ export function Projects() {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* Section header */}
-        <div className="flex items-end justify-between gap-4 sm:gap-6 flex-wrap">
+        <ScrollReveal as="div" y={20} duration={0.7} className="flex items-end justify-between gap-4 sm:gap-6 flex-wrap">
           <div className="max-w-2xl">
             <span className="eyebrow">Projects</span>
             <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
@@ -74,12 +75,10 @@ export function Projects() {
             Three projects spanning decentralised systems, security research,
             and full-stack web.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* FEATURED — full width, larger, inverse-hover */}
-        <div
-          className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
-        >
+        <ScrollReveal as="div" y={32} duration={0.8} delay={0.1} className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10">
             {/* Left — meta + description */}
             <div className="lg:col-span-7">
@@ -130,10 +129,10 @@ export function Projects() {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
-        {/* SECONDARY — two smaller cards side by side */}
-        <div className="mt-4 sm:mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        {/* SECONDARY — two smaller cards side by side, staggered reveal */}
+        <ScrollReveal as="div" y={28} duration={0.7} delay={0.2} stagger={0.15} className="mt-4 sm:mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {SECONDARY.map((project) => (
             <div
               key={project.title}
@@ -188,7 +187,7 @@ export function Projects() {
               </div>
             </div>
           ))}
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

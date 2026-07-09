@@ -1,5 +1,7 @@
 "use client";
 
+import { ScrollReveal } from "./scroll-reveal";
+
 const EDU = [
   {
     institution: "Prist College of Engineering",
@@ -31,15 +33,15 @@ export function Education() {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         {/* Section header */}
-        <div className="max-w-2xl">
+        <ScrollReveal as="div" y={20} duration={0.7} className="max-w-2xl">
           <span className="eyebrow">Education</span>
           <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
             Academic background.
           </h2>
-        </div>
+        </ScrollReveal>
 
-        {/* Timeline — thin white line, yellow dots */}
-        <div className="mt-8 sm:mt-12 max-w-3xl">
+        {/* Timeline — thin white line, yellow dots. Items stagger in. */}
+        <ScrollReveal as="div" y={24} duration={0.6} delay={0.1} stagger={0.15} className="mt-8 sm:mt-12 max-w-3xl">
           <div className="border-l border-border pl-5 sm:pl-8 space-y-7 sm:space-y-10">
             {EDU.map((item) => (
               <div key={item.institution} className="relative">
@@ -65,7 +67,7 @@ export function Education() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

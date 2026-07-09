@@ -12,6 +12,7 @@ import { Contact } from "@/components/portfolio/contact";
 import { Footer } from "@/components/portfolio/footer";
 import { BrightnessSlider } from "@/components/portfolio/brightness-slider";
 import { LoadingScreen } from "@/components/portfolio/loading-screen";
+import { ScrollProgress } from "@/components/portfolio/scroll-progress";
 import { Toaster as SonnerToaster } from "sonner";
 
 export default function Home() {
@@ -32,6 +33,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
+      {/* Scroll progress bar — thin yellow line at top */}
+      <ScrollProgress />
+
       {/* Loading screen — always rendered, fades out via CSS when loading=false.
           pointer-events-none after fade so it doesn't block interaction. */}
       {loading && <LoadingScreen key="loading" />}

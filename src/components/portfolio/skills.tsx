@@ -1,5 +1,7 @@
 "use client";
 
+import { ScrollReveal } from "./scroll-reveal";
+
 const SKILL_GROUPS = [
   {
     title: "Web Development",
@@ -41,7 +43,7 @@ export function Skills() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16">
           {/* LEFT — sticky heading (4/12) */}
-          <div className="lg:col-span-4">
+          <ScrollReveal as="div" y={24} duration={0.7} className="lg:col-span-4">
             <div className="lg:sticky lg:top-28">
               <span className="eyebrow">Skills</span>
               <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
@@ -52,11 +54,17 @@ export function Skills() {
                 full-stack frameworks — the tools I reach for when I build.
               </p>
             </div>
-          </div>
+          </ScrollReveal>
 
-          {/* RIGHT — editorial definition list (8/12) with white-line dividers */}
+          {/* RIGHT — definition list with staggered rows */}
           <div className="lg:col-span-8">
-            <dl className="divide-y divide-border border-y border-border">
+            <ScrollReveal
+              as="dl"
+              y={20}
+              duration={0.6}
+              stagger={0.08}
+              className="divide-y divide-border border-y border-border"
+            >
               {SKILL_GROUPS.map((group) => (
                 <div
                   key={group.title}
@@ -79,7 +87,7 @@ export function Skills() {
                   </dd>
                 </div>
               ))}
-            </dl>
+            </ScrollReveal>
           </div>
         </div>
       </div>
