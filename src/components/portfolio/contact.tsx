@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { Copy, Check, ArrowUpRight, FileText, FileImage, Download } from "lucide-react";
 import { toast } from "sonner";
 
 const CONTACTS = [
@@ -26,6 +26,24 @@ export function Contact() {
     }
   };
 
+  const handleDownload = (type: "ats" | "infographic") => {
+    const path =
+      type === "ats"
+        ? "/resumes/allan-sebastian-ats-resume.pdf"
+        : "/resumes/allan-sebastian-infographic-resume.pdf";
+    const label = type === "ats" ? "ATS resume" : "Infographic resume";
+    toast.success(`${label} downloading`, {
+      description: type === "ats" ? "ATS-friendly · 2 pages · PDF" : "Visual design · 1 page · PDF",
+    });
+    // Trigger download via anchor click
+    const a = document.createElement("a");
+    a.href = path;
+    a.download = path.split("/").pop() || "";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <section
       id="contact"
@@ -47,6 +65,7 @@ export function Contact() {
               happy to talk. Drop me a line and I&apos;ll get back to you.
             </p>
 
+            {/* Primary CTAs — email + copy */}
             <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="mailto:allansebastian2002@gmail.com"
@@ -66,6 +85,29 @@ export function Contact() {
                 )}
                 {copied ? "Copied" : "Copy email"}
               </button>
+            </div>
+
+            {/* Resume downloads — separate group with its own label */}
+            <div className="mt-8 sm:mt-10">
+              <p className="eyebrow mb-3">Download resume</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => handleDownload("ats")}
+                  className="inverse-hover group inline-flex items-center gap-2.5 px-4 py-2.5 bg-foreground text-background text-sm font-semibold rounded-md border border-foreground"
+                >
+                  <FileText className="w-4 h-4 invert-text" />
+                  <span className="invert-text">ATS Resume</span>
+                  <Download className="w-3.5 h-3.5 invert-text opacity-60 transition-opacity group-hover:opacity-100" />
+                </button>
+                <button
+                  onClick={() => handleDownload("infographic")}
+                  className="inline-flex items-center gap-2.5 px-4 py-2.5 border border-border text-sm font-semibold rounded-md text-foreground transition-colors duration-200 hover:border-foreground"
+                >
+                  <FileImage className="w-4 h-4" />
+                  <span>Infographic Resume</span>
+                  <Download className="w-3.5 h-3.5 opacity-60 transition-opacity group-hover:opacity-100" />
+                </button>
+              </div>
             </div>
           </div>
 
