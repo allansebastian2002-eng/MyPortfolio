@@ -24,7 +24,18 @@ export default function Home() {
     const timer = setTimeout(() => {
       setLoading(false);
       document.body.style.overflow = "";
-    }, 2000); // 1.5s progress + 0.5s fade
+
+      // CRITICAL: Refresh ScrollTrigger after loading screen disappears.
+      // ScrollTrigger calculates positions while the loading screen is
+      // visible — without this refresh, the hero pin/assembly won't work.
+      // Small delay to let the loading screen fade out first.
+      setTimeout(() => {
+        import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+          ScrollTrigger.refresh();
+        });
+      }, 100);
+    }, 2000);
+
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = "";
@@ -36,8 +47,7 @@ export default function Home() {
       {/* Scroll progress bar — thin yellow line at top */}
       <ScrollProgress />
 
-      {/* Loading screen — always rendered, fades out via CSS when loading=false.
-          pointer-events-none after fade so it doesn't block interaction. */}
+      {/* Loading screen — always rendered, fades out via CSS when loading=false. */}
       {loading && <LoadingScreen key="loading" />}
 
       {/* Toaster at bottom-left so it doesn't overlap the brightness slider */}
