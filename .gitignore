@@ -52,3 +52,17 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Uploaded personal files (resume, reference images, source photos)
+/upload/
+
+# Database files
+/db/*.db
+/db/*.db-journal
+
+# Dev server PID files
+.zscripts/dev.pid
+.zscripts/mini-service-*.log
+
+# Download folder (user-facing deliverables, not source code)
+/download/
