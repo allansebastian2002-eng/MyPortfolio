@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { About } from "@/components/portfolio/about";
@@ -24,7 +23,7 @@ export default function Home() {
     const timer = setTimeout(() => {
       setLoading(false);
       document.body.style.overflow = "";
-    }, 1600);
+    }, 2000); // 1.5s progress + 0.5s fade
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = "";
@@ -33,9 +32,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
-      <AnimatePresence mode="wait">
-        {loading && <LoadingScreen key="loading" />}
-      </AnimatePresence>
+      {/* Loading screen — always rendered, fades out via CSS when loading=false.
+          pointer-events-none after fade so it doesn't block interaction. */}
+      {loading && <LoadingScreen key="loading" />}
 
       {/* Toaster at bottom-left so it doesn't overlap the brightness slider */}
       <SonnerToaster

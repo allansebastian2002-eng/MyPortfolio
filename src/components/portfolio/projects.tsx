@@ -1,9 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 type Project = {
   title: string;
@@ -59,15 +56,6 @@ const SECONDARY: Project[] = [
 ];
 
 export function Projects() {
-  const reduceMotion = useReducedMotion();
-
-  const cardHover = reduceMotion
-    ? {}
-    : {
-        whileHover: { y: -3 },
-        transition: { duration: 0.18, ease: EASE },
-      };
-
   return (
     <section
       id="projects"
@@ -89,9 +77,8 @@ export function Projects() {
         </div>
 
         {/* FEATURED — full width, larger, inverse-hover */}
-        <motion.div
-          {...cardHover}
-          className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10"
+        <div
+          className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10">
             {/* Left — meta + description */}
@@ -143,15 +130,14 @@ export function Projects() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* SECONDARY — two smaller cards side by side */}
         <div className="mt-4 sm:mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {SECONDARY.map((project) => (
-            <motion.div
+            <div
               key={project.title}
-              {...cardHover}
-              className="inverse-hover surface rounded-md p-5 sm:p-7 group"
+              className="inverse-hover surface rounded-md p-5 sm:p-7 group transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div>
@@ -200,7 +186,7 @@ export function Projects() {
                   {project.impact}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

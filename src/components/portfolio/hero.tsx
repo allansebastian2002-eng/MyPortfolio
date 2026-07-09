@@ -1,40 +1,66 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import { ArrowDownRight, Mail } from "lucide-react";
 
-// Expo-out easing — the "studio" curve, not the default ease-in-out
-const EASE = [0.16, 1, 0.3, 1] as const;
+// Register the React hook once
+gsap.registerPlugin(useGSAP);
 
 export function Hero() {
-  const reduceMotion = useReducedMotion();
-  // Gate animations on mount to prevent hydration mismatch.
-  // Server and first client render: no initial styles (final state).
-  // After mount: play the entrance animation.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    setMounted(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
+  const container = useRef<HTMLElement>(null);
 
-  // Before mount OR when reduced motion: render at final state, no animation.
-  // After mount (and motion allowed): play staggered entrance.
-  const fade = (delay: number) => {
-    if (!mounted || reduceMotion) {
-      return { initial: false, animate: { opacity: 1, y: 0 } };
-    }
-    return {
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.7, ease: EASE, delay },
-    };
-  };
+  useGSAP(
+    () => {
+      // Respect reduced motion — skip all animations
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      if (reduce) return;
+
+      // Timeline with expo.out — the signature "studio smooth" curve.
+      // Slight overlaps create a natural cascade, not a mechanical stagger.
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+      tl.from("[data-anim='eyebrow']", {
+          opacity: 0,
+          y: 14,
+          duration: 0.7,
+        })
+        .from(
+          "[data-anim='name']",
+          { opacity: 0, y: 28, duration: 1.0 },
+          "-=0.35"
+        )
+        .from(
+          "[data-anim='role']",
+          { opacity: 0, y: 20, duration: 0.8 },
+          "-=0.55"
+        )
+        .from(
+          "[data-anim='cta']",
+          { opacity: 0, y: 16, duration: 0.7 },
+          "-=0.45"
+        )
+        .from(
+          "[data-anim='socials']",
+          { opacity: 0, y: 14, duration: 0.6 },
+          "-=0.35"
+        )
+        .from(
+          "[data-anim='photo']",
+          { opacity: 0, y: 30, duration: 0.9 },
+          "-=0.7"
+        );
+    },
+    { scope: container }
+  );
 
   return (
     <section
       id="home"
+      ref={container}
       className="relative pt-28 pb-16 sm:pt-36 sm:pb-28 min-h-screen flex items-center"
     >
       {/* SVG squircle clip-path definition — used by the profile photo */}
@@ -54,32 +80,32 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           {/* LEFT — text column (7/12) */}
           <div className="lg:col-span-7 lg:pt-4">
-            <motion.div {...fade(0)}>
+            <div data-anim="eyebrow">
               <span className="eyebrow">Portfolio — 2024</span>
-            </motion.div>
+            </div>
 
             {/* Name — Space Grotesk display, huge, two lines, yellow period */}
-            <motion.h1
-              {...fade(0.08)}
+            <h1
+              data-anim="name"
               className="mt-5 sm:mt-6 font-display font-bold text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] sm:leading-[0.92] tracking-[-0.03em]"
             >
               Allan
               <br />
               Sebastian<span className="text-accent">.</span>
-            </motion.h1>
+            </h1>
 
             {/* Role + location */}
-            <motion.p
-              {...fade(0.18)}
+            <p
+              data-anim="role"
               className="mt-6 sm:mt-8 text-base sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light"
             >
               Blockchain &amp; web developer building decentralised systems,
               smart contracts, and full-stack applications from Kerala, India.
-            </motion.p>
+            </p>
 
             {/* CTAs — primary solid white (inverts to blue on hover), secondary white-outline */}
-            <motion.div
-              {...fade(0.28)}
+            <div
+              data-anim="cta"
               className="mt-7 sm:mt-9 flex flex-wrap items-center gap-3"
             >
               <button
@@ -104,11 +130,11 @@ export function Hero() {
                 <Mail className="w-4 h-4" />
                 Get in touch
               </button>
-            </motion.div>
+            </div>
 
             {/* Socials — restrained, small, with white-line separators */}
-            <motion.div
-              {...fade(0.36)}
+            <div
+              data-anim="socials"
               className="mt-8 sm:mt-10 flex items-center gap-4 sm:gap-5 text-sm text-foreground/70"
             >
               <a
@@ -135,16 +161,16 @@ export function Hero() {
               >
                 LinkedIn
               </a>
-            </motion.div>
+            </div>
           </div>
 
           {/* RIGHT — photo column (5/12). Centered on mobile, offset down on desktop. */}
-          <motion.div
-            {...fade(0.2)}
+          <div
+            data-anim="photo"
             className="lg:col-span-5 flex justify-center lg:justify-end lg:mt-20"
           >
             <ProfilePhoto />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

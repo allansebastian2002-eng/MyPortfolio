@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
-import { motion } from "framer-motion";
 
 /* Interpolate oklch color values between dark (t=0) and light (t=1) endpoints.
    - Background: deep blue → near-white with faint blue tint
@@ -41,8 +40,6 @@ export function BrightnessSlider() {
   const [brightness, setBrightness] = useState(0);
   const [mounted, setMounted] = useState(false);
 
-  // Read saved brightness after mount — this is the documented React pattern
-  // for localStorage. The eslint rule is overly strict here.
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
     const stored = localStorage.getItem("brightness");
@@ -69,16 +66,20 @@ export function BrightnessSlider() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-3.5 py-2 surface rounded-full"
+    <div
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-3.5 py-2 surface rounded-full opacity-0 translate-y-2.5"
       style={{
         background:
           "color-mix(in oklch, var(--background) 88%, transparent)",
+        animation:
+          "slider-enter 0.4s cubic-bezier(0.16,1,0.3,1) 0.3s forwards",
       }}
     >
+      <style>{`
+        @keyframes slider-enter {
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       <Moon
         className={`w-3.5 h-3.5 transition-colors ${
           brightness < 50 ? "text-foreground" : "text-foreground/40"
@@ -99,6 +100,6 @@ export function BrightnessSlider() {
           brightness >= 50 ? "text-accent" : "text-foreground/40"
         }`}
       />
-    </motion.div>
+    </div>
   );
 }

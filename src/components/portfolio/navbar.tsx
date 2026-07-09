@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
@@ -17,7 +16,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,30 +90,27 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-            animate={reduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden bg-background border-b border-border"
-          >
-            <div className="px-4 py-3 flex flex-col">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-left py-2.5 text-base font-medium text-foreground/80 hover:text-foreground"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile drawer — CSS transition for height + opacity.
+          Always rendered to allow smooth exit transition. */}
+      <div
+        className={`md:hidden overflow-hidden bg-background border-b border-border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          mobileOpen
+            ? "max-h-96 opacity-100"
+            : "max-h-0 opacity-0 border-b-transparent"
+        }`}
+      >
+        <div className="px-4 py-3 flex flex-col">
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.href}
+              onClick={() => handleNavClick(link.href)}
+              className="text-left py-2.5 text-base font-medium text-foreground/80 hover:text-foreground"
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+      </div>
     </header>
   );
 }

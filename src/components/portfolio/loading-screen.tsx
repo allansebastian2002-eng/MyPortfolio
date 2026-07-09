@@ -1,62 +1,115 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+gsap.registerPlugin(useGSAP);
+
+const EASE = "expo.out";
 
 export function LoadingScreen() {
-  const [progress, setProgress] = useState(0);
+  const container = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(interval);
-          return 100;
+  // Animate the progress bar with GSAP — smoother than setInterval + state
+  useGSAP(
+    () => {
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (reduce) {
+        gsap.set(progressRef.current, { width: "100%" });
+        return;
+      }
+
+      // Ease-out fill — fast at start, decelerates near the end
+      gsap.fromTo(
+        progressRef.current,
+        { width: "0%" },
+        {
+          width: "100%",
+          duration: 1.4,
+          ease: EASE,
         }
-        // Ease-out fill — fast at start, slows near the end
-        const remaining = 100 - p;
-        return Math.min(100, p + Math.max(1, remaining * 0.08));
+      );
+
+      // Subtle scale-in for the monogram frame
+      gsap.from(container.current?.querySelector(".ls-monogram") || null, {
+        scale: 0.92,
+        opacity: 0,
+        duration: 0.6,
+        ease: EASE,
       });
-    }, 30);
-    return () => clearInterval(interval);
-  }, []);
+
+      // Fade-in for the name label
+      gsap.from(container.current?.querySelector(".ls-name") || null, {
+        opacity: 0,
+        y: 8,
+        duration: 0.5,
+        ease: EASE,
+        delay: 0.2,
+      });
+    },
+    { scope: container }
+  );
 
   return (
-    // Only the parent uses motion — for the exit fade. No initial styles
-    // means no hydration mismatch on inner elements.
-    <motion.div
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: EASE }}
+    <div
+      ref={container}
       className="fixed inset-0 z-[100] grid place-items-center bg-background"
+      style={{
+        animation: "ls-fade-out 0.5s cubic-bezier(0.16,1,0.3,1) 1.5s forwards",
+      }}
     >
+      <style>{`
+        @keyframes ls-fade-out {
+          to { opacity: 0; pointer-events: none; }
+        }
+      `}</style>
       <div className="flex flex-col items-center gap-7">
         {/* Monogram in square frame */}
-        <div className="w-20 h-20 border border-border grid place-items-center">
+        <div className="ls-monogram w-20 h-20 border border-border grid place-items-center">
           <span className="font-display text-3xl font-bold text-foreground">
             AS
           </span>
         </div>
 
         {/* Name in mono — small, tracked */}
-        <p className="font-mono text-[11px] text-foreground/60 tracking-[0.22em] uppercase">
+        <p className="ls-name font-mono text-[11px] text-foreground/60 tracking-[0.22em] uppercase">
           Allan Sebastian
         </p>
 
-        {/* Progress bar — thin, fills with ease-out */}
+        {/* Progress bar — GSAP animates the width */}
         <div className="w-44 h-px bg-border overflow-hidden">
-          <div
-            className="h-full bg-foreground transition-[width] duration-100 ease-out"
-            style={{ width: `${progress}%` }}
-          />
+          <div ref={progressRef} className="h-full bg-foreground" style={{ width: "0%" }} />
         </div>
 
-        {/* Percentage counter */}
-        <span className="font-mono text-[10px] text-foreground/40 tracking-wider">
-          {String(Math.round(progress)).padStart(3, "0")}
-        </span>
+        {/* Percentage counter — follows the GSAP progress */}
+        <PercentageCounter />
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+/* Small counter that follows the progress bar timing.
+   Uses CSS animation synced to the GSAP duration. */
+function PercentageCounter() {
+  return (
+    <span
+      className="font-mono text-[10px] text-foreground/40 tracking-wider"
+      style={{
+        animation: "ls-count 1.4s cubic-bezier(0.16,1,0.3,1) forwards",
+      }}
+    >
+      <style>{`
+        @keyframes ls-count {
+          0% { content: "000"; }
+          100% { content: "100"; }
+        }
+      `}</style>
+      100
+    </span>
   );
 }
