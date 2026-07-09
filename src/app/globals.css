@@ -139,6 +139,37 @@
     background: oklch(0.82 0.17 95);
     color: oklch(0.36 0.2 264);
   }
+
+  /* Custom scrollbar — matches the site's blue/white aesthetic.
+     Uses var(--foreground) for the thumb so it auto-adapts to the
+     brightness slider (white in dark mode, blue in light mode).
+     Track stays transparent against the background.
+     Thin and unobtrusive — only the thumb is visible. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--foreground) 35%, transparent);
+    border: 3px solid var(--background);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--foreground) 60%, transparent);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Firefox — simpler but matching */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--foreground) 35%, transparent) transparent;
+  }
 }
 
 @layer utilities {
