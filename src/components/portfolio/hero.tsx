@@ -48,18 +48,21 @@ export function Hero() {
       // Runs before paint (useGSAP = layout effect), so no flash.
       // The loading screen covers this period anyway (2s).
       // Letters are VISIBLE (opacity 1) so the user can see them scattered.
+      // Range kept within viewport so no letter goes off-screen.
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
       letters.forEach((letter) => {
-        const scatterX = (Math.random() - 0.5) * vw * 1.2;
-        const scatterY = (Math.random() - 0.5) * vh * 1.3;
-        const scatterRot = (Math.random() - 0.5) * 40;
+        // Scatter within visible viewport range so all letters stay on screen.
+        // ±30% horizontal, ±25% vertical — dramatic but visible.
+        const scatterX = (Math.random() - 0.5) * vw * 0.6;
+        const scatterY = (Math.random() - 0.5) * vh * 0.4;
+        const scatterRot = (Math.random() - 0.5) * 45;
         gsap.set(letter, {
           x: scatterX,
           y: scatterY,
           rotation: scatterRot,
-          opacity: 1,
+          opacity: 0.9,
         });
       });
 
