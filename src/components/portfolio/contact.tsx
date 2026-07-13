@@ -10,6 +10,7 @@ const CONTACTS = [
   { label: "Phone", value: "+91 86063 19700", href: "tel:+918606319700" },
   { label: "LinkedIn", value: "in/allan-sebastian-827765296", href: "https://www.linkedin.com/in/allan-sebastian-827765296" },
   { label: "GitHub", value: "allansebastian2002-eng", href: "https://github.com/allansebastian2002-eng" },
+  { label: "Portfolio", value: "my-portfolio-indol-ten-52.vercel.app", href: "https://my-portfolio-indol-ten-52.vercel.app/" },
   { label: "Location", value: "Kerala, India", href: undefined },
 ];
 
