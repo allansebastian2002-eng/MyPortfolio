@@ -108,8 +108,7 @@ story.append(Paragraph(
 story.append(Paragraph(
     '<a href="https://github.com/allansebastian2002-eng" color="#1A4D8F"><u>GitHub</u></a>  |  '
     '<a href="https://www.linkedin.com/in/allan-sebastian-827765296" color="#1A4D8F"><u>LinkedIn</u></a>  |  '
-    '<a href="https://my-portfolio-indol-ten-52.vercel.app/" color="#1A4D8F"><u>Portfolio</u></a>  |  '
-    '<a href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf" color="#1A4D8F"><u>Published Paper</u></a>',
+    '<a href="https://my-portfolio-indol-ten-52.vercel.app/" color="#1A4D8F"><u>Portfolio</u></a>',
     contact_style
 ))
 
@@ -177,7 +176,8 @@ story.append(Paragraph(
     'Investigated how centralised social media companies harvest and monetise personal data, '
     'proposing a decentralised alternative on the Ethereum blockchain. The system uses Solidity '
     'smart contracts for content ownership and tipping without a central authority, giving users '
-    'verifiable control over their data.',
+    'verifiable control over their data. '
+    '<a href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf" color="#1A4D8F"><u>Published Paper</u></a>',
     body_style
 ))
 
