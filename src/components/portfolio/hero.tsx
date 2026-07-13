@@ -182,8 +182,8 @@ export function Hero() {
 
             {/* Role + location */}
             <p className="hero-role mt-6 sm:mt-8 text-base sm:text-xl text-foreground/80 leading-relaxed max-w-xl font-light">
-              Blockchain &amp; web developer building decentralised systems,
-              smart contracts, and full-stack applications from Kerala, India.
+              Computer Science engineer and aspiring full-stack developer from
+              Kerala, India. Currently building with React, Python, and Solidity.
             </p>
 
             {/* CTAs */}

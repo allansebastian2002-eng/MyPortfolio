@@ -4,9 +4,9 @@ import { ScrollReveal } from "./scroll-reveal";
 
 const STATS = [
   { value: "1", label: "Published paper" },
-  { value: "3", label: "Major projects shipped" },
-  { value: "2+", label: "Security research areas" },
+  { value: "3", label: "Projects shipped" },
   { value: "2024", label: "BTech CSE, graduated" },
+  { value: "Fresher", label: "Open to opportunities" },
 ];
 
 const COURSEWORK = [
@@ -29,7 +29,7 @@ export function About() {
         <ScrollReveal as="div" y={20} duration={0.7} className="max-w-2xl">
           <span className="eyebrow">About</span>
           <h2 className="mt-3 font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em]">
-            Building secure, decentralised software.
+            Aspiring developer, curious builder.
           </h2>
         </ScrollReveal>
 
@@ -44,23 +44,19 @@ export function About() {
             className="lg:col-span-7 space-y-4 sm:space-y-5"
           >
             <p className="text-sm sm:text-lg leading-relaxed text-foreground/90 font-light">
-              I&apos;m a computer science engineer with a deep interest in how
-              decentralised systems, applied cryptography, and full-stack web
-              development can come together to give people more control over
-              their digital lives. My work explores the intersection of{" "}
-              <span className="text-foreground font-medium">blockchain</span>{" "}
-              and{" "}
-              <span className="text-foreground font-medium">
-                practical security
-              </span>{" "}
-              — from Ethereum-based social platforms to malware detection in
-              open-source package repositories.
+              I&apos;m a recent Computer Science graduate from Kerala, India,
+              just starting out as a developer. During my engineering I built
+              a few projects across web development and security research,
+              and co-authored a published paper on decentralised social media
+              — an area I find genuinely interesting even though I&apos;m
+              still learning the deeper details.
             </p>
             <p className="text-sm sm:text-lg leading-relaxed text-foreground/70 font-light">
-              Beyond code, I care about translating research into shipping
-              products. My paper on decentralised social media was published in
-              IJIRCCE, and I continue to look for problems where strong
-              engineering can shift incentives in favour of users.
+              I&apos;m comfortable with the fundamentals — C, C++, Python,
+              Java, JavaScript, and SQL — and I&apos;ve shipped work in React
+              and Solidity. I&apos;m looking for my first role where I can
+              learn from a team, write production code, and grow into a
+              well-rounded engineer.
             </p>
 
             {/* Coursework — inline tags with white-line separators */}

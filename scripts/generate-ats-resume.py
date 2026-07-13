@@ -36,6 +36,13 @@ contact_style = ParagraphStyle(
     'ResumeContact', fontName='FreeSerif', fontSize=10,
     leading=14, alignment=TA_CENTER, textColor=TEXT_MUTED, spaceAfter=8
 )
+
+# Link style — underlined, same muted color so it reads as a link
+link_style = ParagraphStyle(
+    'ResumeLink', fontName='FreeSerif', fontSize=10,
+    leading=14, textColor=colors.HexColor('#2C5AA0'), spaceAfter=2,
+    underline=True
+)
 section_title_style = ParagraphStyle(
     'ResumeSectionTitle', fontName='FreeSerif-Bold', fontSize=12,
     leading=15, spaceBefore=12, spaceAfter=2, textColor=TEXT_DARK,
@@ -102,20 +109,24 @@ story = []
 # Header
 story.append(Paragraph('ALLAN SEBASTIAN', name_style))
 story.append(Paragraph(
-    'allansebastian2002@gmail.com  |  +91 86063 19700  |  Kerala, India  |  '
-    '<a href="https://www.linkedin.com/in/allan-sebastian-827765296" color="#555555">LinkedIn</a>  |  '
-    '<a href="https://github.com/allansebastian2002-eng" color="#555555">GitHub</a>',
+    'allansebastian2002@gmail.com  |  +91 86063 19700  |  Kerala, India',
+    contact_style
+))
+story.append(Paragraph(
+    'LinkedIn: <a href="https://www.linkedin.com/in/allan-sebastian-827765296" color="#2C5AA0"><u>linkedin.com/in/allan-sebastian-827765296</u></a>  |  '
+    'GitHub: <a href="https://github.com/allansebastian2002-eng" color="#2C5AA0"><u>github.com/allansebastian2002-eng</u></a>',
     contact_style
 ))
 
 # Summary
 story.extend(section_header('Professional Summary'))
 story.append(Paragraph(
-    'Computer Science engineer specialising in blockchain technology, decentralised systems, '
-    'and full-stack web development. Published researcher in Ethereum-based social media '
-    'architecture. Experienced in Solidity smart contracts, React frontend development, and '
-    'security research focusing on open-source supply chain vulnerabilities. Seeking to apply '
-    'decentralised systems expertise to products that give users verifiable control over their data.',
+    'Recent Computer Science graduate (2024) with a strong foundation in programming '
+    'fundamentals and an interest in full-stack web development. Built academic projects '
+    'across web, database, and security research, and co-authored a published paper on '
+    'decentralised social media. Comfortable with C, C++, Python, Java, JavaScript, and SQL, '
+    'with hands-on experience in React and Solidity. Seeking an entry-level developer role '
+    'to learn from an experienced team and grow into a well-rounded engineer.',
     body_style
 ))
 
@@ -165,9 +176,12 @@ story.append(Paragraph(
     job_title_style
 ))
 story.append(Paragraph(
-    'International Journal of Innovative Research in Computer and Communication Engineering (IJIRCCE)  |  Volume 12, Issue 5  |  May 2024  |  '
-    '<a href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf" color="#555555">View Paper PDF</a>',
+    'International Journal of Innovative Research in Computer and Communication Engineering (IJIRCCE)  |  Volume 12, Issue 5  |  May 2024',
     job_meta_style
+))
+story.append(Paragraph(
+    'Paper PDF: <a href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf" color="#2C5AA0"><u>ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf</u></a>',
+    link_style
 ))
 story.append(Paragraph(
     'Investigated how centralised social media companies harvest and monetise personal data, '
