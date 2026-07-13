@@ -10,6 +10,7 @@ type Project = {
   stack: string[];
   highlights: string[];
   impact: string;
+  link?: string;
 };
 
 const FEATURED: Project = {
@@ -25,6 +26,7 @@ const FEATURED: Project = {
   ],
   impact:
     "Became the basis of a peer-reviewed publication on decentralised social systems.",
+  link: "https://github.com/allansebastian2002-eng/Decentralised-Social-Media-Website",
 };
 
 const SECONDARY: Project[] = [
@@ -53,6 +55,7 @@ const SECONDARY: Project[] = [
     ],
     impact:
       "Streamlines prescription workflows between clinicians and patients.",
+    link: "https://github.com/allansebastian2002-eng/Smart-Medical-Prescription-Service",
   },
 ];
 
@@ -77,8 +80,8 @@ export function Projects() {
           </p>
         </ScrollReveal>
 
-        {/* FEATURED — full width, larger, inverse-hover */}
-        <ScrollReveal as="div" y={32} duration={0.8} delay={0.1} className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1">
+        {/* FEATURED — full width, larger, inverse-hover. Links to GitHub. */}
+        <ScrollReveal as="a" href={FEATURED.link} target="_blank" rel="noreferrer" y={32} duration={0.8} delay={0.1} className="inverse-hover mt-6 sm:mt-10 surface rounded-md p-5 sm:p-9 lg:p-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 block">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10">
             {/* Left — meta + description */}
             <div className="lg:col-span-7">
@@ -133,10 +136,13 @@ export function Projects() {
 
         {/* SECONDARY — two smaller cards side by side, staggered reveal */}
         <ScrollReveal as="div" y={28} duration={0.7} delay={0.2} stagger={0.15} className="mt-4 sm:mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-          {SECONDARY.map((project) => (
-            <div
+          {SECONDARY.map((project) => {
+            const Wrapper = project.link ? "a" : "div";
+            return (
+            <Wrapper
               key={project.title}
-              className="inverse-hover surface rounded-md p-5 sm:p-7 group transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
+              {...(project.link ? { href: project.link, target: "_blank", rel: "noreferrer" } : {})}
+              className="inverse-hover surface rounded-md p-5 sm:p-7 group transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 block"
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div>
@@ -185,8 +191,9 @@ export function Projects() {
                   {project.impact}
                 </p>
               </div>
-            </div>
-          ))}
+            </Wrapper>
+            );
+          })}
         </ScrollReveal>
       </div>
     </section>

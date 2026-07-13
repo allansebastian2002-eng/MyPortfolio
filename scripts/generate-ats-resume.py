@@ -102,7 +102,9 @@ story = []
 # Header
 story.append(Paragraph('ALLAN SEBASTIAN', name_style))
 story.append(Paragraph(
-    'allansebastian2002@gmail.com  |  +91 86063 19700  |  Kerala, India',
+    'allansebastian2002@gmail.com  |  +91 86063 19700  |  Kerala, India  |  '
+    '<a href="https://www.linkedin.com/in/allan-sebastian-827765296" color="#555555">LinkedIn</a>  |  '
+    '<a href="https://github.com/allansebastian2002-eng" color="#555555">GitHub</a>',
     contact_style
 ))
 
@@ -163,7 +165,8 @@ story.append(Paragraph(
     job_title_style
 ))
 story.append(Paragraph(
-    'International Journal of Innovative Research in Computer and Communication Engineering (IJIRCCE)  |  Volume 12, Issue 5  |  May 2024',
+    'International Journal of Innovative Research in Computer and Communication Engineering (IJIRCCE)  |  Volume 12, Issue 5  |  May 2024  |  '
+    '<a href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf" color="#555555">View Paper PDF</a>',
     job_meta_style
 ))
 story.append(Paragraph(

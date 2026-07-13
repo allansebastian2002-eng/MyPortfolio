@@ -8,7 +8,8 @@ import { ScrollReveal } from "./scroll-reveal";
 const CONTACTS = [
   { label: "Email", value: "allansebastian2002@gmail.com", href: "mailto:allansebastian2002@gmail.com" },
   { label: "Phone", value: "+91 86063 19700", href: "tel:+918606319700" },
-  { label: "LinkedIn", value: "in/allan-sebastian", href: "https://www.linkedin.com/in/allan-sebastian" },
+  { label: "LinkedIn", value: "in/allan-sebastian-827765296", href: "https://www.linkedin.com/in/allan-sebastian-827765296" },
+  { label: "GitHub", value: "allansebastian2002-eng", href: "https://github.com/allansebastian2002-eng" },
   { label: "Location", value: "Kerala, India", href: undefined },
 ];
 

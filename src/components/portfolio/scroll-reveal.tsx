@@ -19,6 +19,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
  * - delay: seconds (default 0)
  * - stagger: if >0, staggers direct children (default 0)
  * - once: only animate the first time (default true)
+ * - ...rest: any other HTML attributes (href, target, rel, etc.) passed to the element
  */
 type ScrollRevealProps = {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ type ScrollRevealProps = {
   once?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  [key: string]: unknown;
 };
 
 export function ScrollReveal({
@@ -42,6 +44,7 @@ export function ScrollReveal({
   once = true,
   className,
   style,
+  ...rest
 }: ScrollRevealProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -78,7 +81,7 @@ export function ScrollReveal({
   );
 
   return (
-    <Tag ref={ref} className={className} style={style}>
+    <Tag ref={ref} className={className} style={style} {...rest}>
       {children}
     </Tag>
   );

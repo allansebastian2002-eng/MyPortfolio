@@ -222,7 +222,7 @@ export function Hero() {
               </a>
               <span className="w-px h-3 bg-border" />
               <a
-                href="https://github.com/"
+                href="https://github.com/allansebastian2002-eng"
                 target="_blank"
                 rel="noreferrer"
                 className="nav-link hover:text-foreground transition-colors"
@@ -231,7 +231,7 @@ export function Hero() {
               </a>
               <span className="w-px h-3 bg-border" />
               <a
-                href="https://www.linkedin.com/in/allan-sebastian"
+                href="https://www.linkedin.com/in/allan-sebastian-827765296"
                 target="_blank"
                 rel="noreferrer"
                 className="nav-link hover:text-foreground transition-colors"

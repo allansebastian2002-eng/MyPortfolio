@@ -60,12 +60,12 @@ export function Research() {
               </p>
 
               <a
-                href="https://www.ijircce.com/"
+                href="https://ijircce.com/admin/main/storage/app/pdf/alLCJQcqcK0Awv80xPlZjPpKXkp5vSTcgGFujqoy.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="nav-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent"
               >
-                View journal
+                Read the paper
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
